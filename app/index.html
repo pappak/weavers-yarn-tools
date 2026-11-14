@@ -1,0 +1,1966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weavers Yarn Tools</title>
+
+<style>
+@font-face{font-family:'Raleway';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/raleway-400-0.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/raleway-400-1.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/raleway-400-2.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/raleway-400-3.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/raleway-400-4.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/raleway-500-5.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/raleway-500-6.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/raleway-500-7.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/raleway-500-8.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/raleway-500-9.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/raleway-600-10.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/raleway-600-11.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/raleway-600-12.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/raleway-600-13.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/raleway-600-14.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/raleway-700-15.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/raleway-700-16.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/raleway-700-17.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/raleway-700-18.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/raleway-700-19.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:800;font-display:swap;src:url(fonts/raleway-800-20.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:800;font-display:swap;src:url(fonts/raleway-800-21.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:800;font-display:swap;src:url(fonts/raleway-800-22.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:800;font-display:swap;src:url(fonts/raleway-800-23.woff2) format('woff2');}
+@font-face{font-family:'Raleway';font-style:normal;font-weight:800;font-display:swap;src:url(fonts/raleway-800-24.woff2) format('woff2');}
+</style>
+<style>
+:root {
+            /* ── Brand ─────────────────────────────────────────────────── */
+            --brand-blue: #001E87;
+            --brand-purple: #4D167C;
+            --brand-purple-hover: #5d1f96;
+            --brand-blue-hover: #0028b0;
+            --brand-purple-deep: #3a0f5e;
+
+            /* Gold — the Tools button's own colour, so it stands out as the
+               entry point for every tool in the app. */
+            --gold: #FFC107;
+            --gold-hover: #FFB300;
+            --gold-border: #E5A800;
+
+            /* Backwards-compatible aliases used across the existing styles */
+            --accent: #4D167C;
+            --accent-hover: #3a0f5e;
+
+            /* ── Surfaces ─────────────────────────────────────────────── */
+            --bg: #f0f2f8;
+            --surface: #ffffff;
+            --surface-2: #e0e4f0;
+            --surface-3: #e8ecf8;
+            --surface-warm: #f5f0e8;
+            --antique-white: #EDE8DE;
+
+            /* ── Text ─────────────────────────────────────────────────── */
+            --text: #33343A;
+            --text-muted: #6b6b8a;
+            --text-faint: #9ba3c0;
+            --ink: #1a1a1a;
+
+            /* ── Lines & borders ──────────────────────────────────────── */
+            --border: #b8c0d8;
+            --border-dark: #001E87;
+            --line-warm: #c8bfb0;
+            --shaft-bg: #dde2f2;
+
+            /* ── Interactive ───────────────────────────────────────────── */
+            --btn-bg: #e8ecf8;
+            --btn-hover: #d0d8f0;
+            --active-cell: #001E87;
+
+            /* ── Regions ──────────────────────────────────────────────── */
+            --header-bg: #f8f9ff;
+            --controlsbar-bg: #f0f2f8;
+            --workspace-bg: #ffffff;
+            --footer-bg: #2A2A2A;
+}
+</style>
+<style>
+        .btn {
+            --btn-fill: var(--brand-blue);
+            --btn-ink: var(--surface);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            line-height: 1;
+            padding: 9px 16px;
+            border: 1px solid transparent;
+            background: var(--btn-fill);
+            color: var(--btn-ink);
+            cursor: pointer;
+            white-space: nowrap;
+            border-radius: 9px;
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.14),
+                0 1px 1px rgba(0, 0, 0, 0.05),
+                0 2px 6px rgba(0, 0, 0, 0.09);
+            transition:
+                background-color 0.15s ease,
+                border-color 0.15s ease,
+                color 0.15s ease,
+                box-shadow 0.15s ease,
+                transform 0.06s ease;
+        }
+        .btn:hover {
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.18),
+                0 2px 4px rgba(0, 0, 0, 0.07),
+                0 5px 12px rgba(0, 0, 0, 0.14);
+            transform: translateY(-1px);
+        }
+        .btn:active {
+            transform: translateY(1px);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.18);
+        }
+        .btn:focus-visible {
+            outline: 2px solid var(--brand-purple);
+            outline-offset: 2px;
+        }
+        .btn:disabled, .btn[aria-disabled="true"] {
+            opacity: 0.45;
+            pointer-events: none;
+            box-shadow: none;
+            transform: none;
+        }
+
+        /* ── Weights ────────────────────────────────────────────────── */
+
+        /* Primary - the main action on a screen. */
+        .btn-primary { --btn-fill: var(--brand-blue); --btn-ink: var(--surface); }
+        .btn-primary:hover { --btn-fill: var(--brand-blue-hover); }
+
+        /* Accent - the one attention colour: tools, highlights, focus. */
+        .btn-accent { --btn-fill: var(--brand-purple); --btn-ink: var(--surface); }
+        .btn-accent:hover { --btn-fill: var(--brand-purple-hover); }
+
+        /* Secondary - outlined, sits beside a primary without competing. */
+        .btn-secondary {
+            --btn-fill: var(--surface-2);
+            --btn-ink: var(--text);
+            border-color: var(--border);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+        .btn-secondary:hover {
+            --btn-fill: var(--surface-3);
+            border-color: var(--brand-blue);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Ghost - tertiary, for the quietest actions. */
+        .btn-ghost {
+            --btn-fill: transparent;
+            --btn-ink: var(--brand-blue);
+            box-shadow: none;
+        }
+        .btn-ghost:hover { --btn-fill: var(--surface-2); box-shadow: none; }
+
+        /* On state - a toggle that is currently on. */
+        .btn.is-on { --btn-fill: var(--brand-purple); --btn-ink: var(--surface); }
+        .btn.is-on:hover { --btn-fill: var(--brand-purple-hover); }
+
+        /* On dark - for the coloured modal headers. */
+        .btn-on-dark {
+            --btn-fill: rgba(255, 255, 255, 0.14);
+            --btn-ink: var(--surface);
+            border-color: rgba(255, 255, 255, 0.35);
+            box-shadow: none;
+        }
+        .btn-on-dark:hover { --btn-fill: rgba(255, 255, 255, 0.24); }
+
+        /* Danger - destructive actions only. */
+        .btn-danger { --btn-fill: var(--danger); --btn-ink: var(--surface); }
+        .btn-danger:hover { --btn-fill: var(--danger-hover); }
+
+        /* ── Legacy class names kept as aliases ───────────────────────
+           These were seven near-identical gradient classes. They now all
+           resolve to the family above, so existing markup keeps working
+           while every button finally looks like it belongs to the same
+           product. */
+        .btn-view, .btn-generate, .btn-output { --btn-fill: var(--brand-blue); --btn-ink: var(--surface); }
+        .btn-view:hover, .btn-generate:hover, .btn-output:hover { --btn-fill: var(--brand-blue-hover); }
+        .btn-input { --btn-fill: var(--brand-blue); --btn-ink: var(--surface); }
+        .btn-input:hover { --btn-fill: var(--brand-blue-hover); }
+        .btn-tool { --btn-fill: var(--brand-purple); --btn-ink: var(--surface); }
+        .btn-tool:hover { --btn-fill: var(--brand-purple-hover); }
+        .green-style { --btn-fill: var(--brand-purple); --btn-ink: var(--surface); }
+        .green-style:hover { --btn-fill: var(--brand-purple-hover); }
+</style>
+<style>
+<style>
+.yc-row { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+.yc-label { font-size:11px; font-weight:600; color:var(--text-muted); flex:1; letter-spacing:0.02em; }
+.yc-input {
+  width:90px; padding:5px 7px; border:1.5px solid var(--border); border-radius:5px;
+  font-family:'Raleway',sans-serif; font-size:12px; font-weight:600; color:var(--text);
+  outline:none; text-align:right; background:white;
+  -webkit-user-select:text !important; user-select:text !important;
+}
+.yc-input:focus { border-color:var(--brand-purple); }
+.yc-sync { padding:5px 10px; background:var(--brand-purple); border:1px solid transparent; border-radius:9px; cursor:pointer; font-size:10px; font-weight:700; color:var(--surface); font-family:'Raleway',sans-serif; white-space:nowrap; }
+.yc-sync:hover { background:var(--brand-purple-hover); }
+.yc-stat-card { background:var(--header-bg); border:1px solid var(--shaft-bg); border-radius:7px; padding:10px 12px; }
+.yc-stat-label { font-size:9px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--brand-blue); margin-bottom:4px; }
+.yc-stat-val { font-size:1.15em; font-weight:800; color:var(--brand-blue); }
+.yc-color-row { display:flex; flex-direction:column; gap:6px; background:white; border:1px solid var(--shaft-bg); border-radius:6px; padding:8px 10px; }
+.yc-breakdown-row { background:white; border:1px solid var(--shaft-bg); border-radius:6px; padding:9px 12px; }
+</style>
+
+/* ═══ YARN LIBRARY ═══ */
+.yl-toolbar { display:flex; gap:12px; align-items:center; padding:16px 22px; background:var(--surface); border-bottom:1.5px solid var(--surface-2); flex-wrap:wrap; }
+.yl-toolbar input[type="search"] { flex:1; min-width:200px; padding:10px 14px; border:1.5px solid var(--btn-hover); border-radius:8px; font-family:'Raleway',sans-serif;font-size:14px; font-weight:600; color:var(--brand-blue); outline:none; background:white; transition:border-color 0.15s; }
+.yl-toolbar input[type="search"]:focus { border-color:var(--brand-purple); }
+.yl-toolbar select { padding:10px 14px; border:1.5px solid var(--btn-hover); border-radius:8px; font-family:'Raleway',sans-serif;font-size:13px; font-weight:700; color:var(--brand-blue); outline:none; background:white; cursor:pointer; }
+.yl-toolbar select:focus { border-color:var(--brand-purple); }
+.yl-count { font-size:12px; font-weight:700; color:var(--text-muted); letter-spacing:0.05em; padding:6px 12px; background:var(--btn-bg); border-radius:6px; }
+.yl-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:18px; padding:22px 22px; overflow-y:auto; align-content:start; max-height:calc(92vh - 300px); min-height:240px; }
+.yl-card { background:white; border:1.5px solid var(--surface-2); border-radius:11px; overflow:hidden; transition:transform 0.12s, box-shadow 0.12s, border-color 0.12s; }
+.yl-card:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,30,135,0.14); border-color:var(--brand-purple); }
+.yl-body { padding:16px 18px 18px; }
+.yl-name { font-size:14px; font-weight:800; color:var(--brand-blue); line-height:1.4; min-height:2.8em; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; word-break:break-word; flex:1; min-width:0; }
+.yl-name-row { display:flex; align-items:flex-start; gap:6px; }
+.yl-fiber { margin-top:10px; display:flex; align-items:center; gap:7px; }
+.yl-fiber-dot { display:inline-block; width:10px; height:10px; border-radius:50%; flex-shrink:0; border:1px solid rgba(0,0,0,0.12); }
+.yl-badge { display:inline-block; font-size:10.5px; font-weight:800; letter-spacing:0.07em; text-transform:uppercase; color:var(--text); padding:3px 9px; border-radius:5px; border:1px solid rgba(0,0,0,0.1); }
+.yl-yard { font-size:12.5px; color:var(--text-muted); font-weight:600; margin-top:10px; line-height:1.5; }
+.yl-sett { font-size:12.5px; color:var(--brand-blue); font-weight:700; margin-top:6px; line-height:1.5; }
+.yl-sett-label { color:var(--text-faint); font-weight:600; text-transform:uppercase; letter-spacing:0.06em; font-size:10px; }
+.yl-actions { display:flex; gap:9px; margin-top:12px; padding-top:12px; border-top:1px solid var(--bg); }
+.yl-btn { flex:1; padding:9px 6px; border-radius:6px; font-family:'Raleway',sans-serif;font-size:11.5px; font-weight:800; cursor:pointer; letter-spacing:0.02em; border:1.5px solid; transition:all 0.1s; }
+.yl-btn-sett { background:white; color:var(--brand-blue); border-color:var(--brand-blue); }
+.yl-btn-sett:hover { background:var(--brand-blue); color:white; }
+.yl-btn-yc { background:var(--success); color:white; border-color:var(--success); }
+.yl-btn-yc:hover { background:#1b5e20; border-color:#1b5e20; }
+.yl-credit { display:none; }
+.yl-tab { padding:6px 16px; border:1.5px solid var(--border); background:white; color:var(--text); border-radius:6px; cursor:pointer; font-family:'Raleway',sans-serif; font-weight:700; font-size:0.82em; letter-spacing:0.04em; transition:all 0.12s; }
+.yl-tab:hover { border-color:var(--brand-purple); color:var(--brand-purple); }
+.yl-tab.active { background:linear-gradient(135deg,var(--brand-blue),var(--brand-purple)); color:white; border-color:transparent; box-shadow:0 2px 6px rgba(77,22,124,0.3); }
+.yl-leg-item { display:inline-flex; align-items:center; gap:4px; }
+.yl-leg-dot { display:inline-block; width:10px; height:10px; border-radius:3px; border:1px solid rgba(0,0,0,0.1); flex-shrink:0; }
+.yl-fav { flex-shrink:0; background:rgba(255,255,255,0.9); border:1.5px solid transparent; border-radius:50%; cursor:pointer; padding:2px 5px; line-height:1; font-size:15px; transition:all 0.1s; font-family:Arial,sans-serif; margin-top:1px; }
+.yl-fav:hover { background:white; border-color:var(--brand-purple); transform:scale(1.12); }
+.yl-fav-star { color:#d0d4dc; display:inline-block; }
+.yl-fav-star.on { color:var(--brand-purple); }
+</style>
+
+</style>
+<style>
+<style id="yc-pastel-theme">
+  #yarnCalcModal { background:rgba(0,30,135,.24)!important; }
+  #yarnCalcModal>div { background:var(--surface)!important; border:1px solid var(--border); box-shadow:0 18px 52px rgba(0,30,135,.18)!important; }
+  #yarnCalcModal>div>div:first-child { background:var(--surface-3)!important; border-bottom:1px solid var(--border); }
+  #yarnCalcModal>div>div:first-child>div:first-child>div:first-child { color:var(--brand-purple)!important; }
+  #yarnCalcModal>div>div:first-child>div:first-child>div:last-child,
+  #yarnCalcModal #yc_rateIndicator { color:var(--text-muted)!important; }
+  #yarnCalcModal>div>div:nth-child(2) { background:var(--surface); }
+  #yarnCalcModal [style*="text-transform:uppercase"] { color:var(--brand-blue)!important; border-bottom-color:var(--border)!important; }
+  #yarnCalcModal .yc-label { color:var(--brand-blue); font-weight:700; }
+  #yarnCalcModal .yc-input,
+  #yarnCalcModal #yc_currency,
+  #yarnCalcModal .yc-color-row input[type="number"] {
+    background:var(--surface)!important; color:var(--text)!important; border-color:var(--border)!important;
+  }
+  #yarnCalcModal #yc_currency option { background:var(--surface)!important; color:var(--text)!important; }
+  #yarnCalcModal .yc-input:focus,
+  #yarnCalcModal #yc_currency:focus {
+    border-color:var(--brand-purple)!important; box-shadow:0 0 0 3px rgba(77,22,124,.18)!important;
+  }
+  #yarnCalcModal .yc-stat-card,
+  #yarnCalcModal .yc-breakdown-row {
+    background:white!important; border-color:var(--border)!important; color:var(--text)!important;
+  }
+  #yarnCalcModal .yc-stat-card:nth-child(3n + 2),
+  #yarnCalcModal .yc-breakdown-row:nth-child(even) {
+    background:white!important; border-color:var(--border)!important;
+  }
+  #yarnCalcModal .yc-stat-label { color:var(--brand-blue); font-size:10px; }
+  #yarnCalcModal .yc-stat-val { color:var(--brand-purple); }
+  #yarnCalcModal #yc_totalYds { color:var(--brand-purple)!important; }
+  #yarnCalcModal #yc_costCard { background:var(--surface-2)!important; border:1px solid var(--border); }
+  #yarnCalcModal #yc_totalCost { color:var(--success-text)!important; }
+  /* Button text in the yarn calculator.
+     The header sits on the dark brand gradient, the body on white - so the
+     two need different text colours. One blanket rule used to force the
+     same colour onto both, leaving dark text on the navy buttons.
+     The .btn family already fills the body buttons navy, so white is
+     readable on them; the ghost button needs brand-coloured text instead. */
+  #yarnCalcModal>div>div:first-child button {
+    color:var(--surface)!important;
+    border-color:rgba(255,255,255,0.35)!important;
+  }
+  #yarnCalcModal>div>div:first-child button:hover:not(:disabled) {
+    background:rgba(255,255,255,0.18)!important;
+  }
+  #yarnCalcModal>div>div:nth-child(2) button {
+    color:var(--surface)!important;
+  }
+  #yarnCalcModal>div>div:nth-child(2) button:hover:not(:disabled) {
+    background:var(--brand-blue-hover)!important;
+  }
+  #yarnCalcModal>div>div:nth-child(2) button.yc-sync:hover:not(:disabled) {
+    background:var(--brand-purple-hover)!important;
+  }
+  #yarnCalcModal>div>div:nth-child(2) button.btn-ghost,
+  #yarnCalcModal>div>div:nth-child(2) button.btn-secondary,
+  #yarnCalcModal>div>div:nth-child(2) button.yc-add-color {
+    color:var(--surface)!important;
+    background:var(--brand-purple)!important;
+    border-color:var(--brand-purple)!important;
+    border-radius:9px!important;
+    padding:9px 16px!important;
+    font-size:12px!important;
+    font-weight:700!important;
+    letter-spacing:0.04em!important;
+  }
+  #yarnCalcModal>div>div:nth-child(2) button.btn-ghost:hover:not(:disabled),
+  #yarnCalcModal>div>div:nth-child(2) button.btn-secondary:hover:not(:disabled),
+  #yarnCalcModal>div>div:nth-child(2) button.yc-add-color:hover:not(:disabled) {
+    background:var(--brand-purple-hover)!important;
+    border-color:var(--brand-purple-hover)!important;
+  }
+  #yarnCalcModal>div>div:first-child button.btn-on-dark {
+    background:var(--brand-purple)!important;
+    border-color:var(--brand-purple)!important;
+    border-radius:9px!important;
+    padding:9px 16px!important;
+    font-size:12px!important;
+    font-weight:700!important;
+    letter-spacing:0.04em!important;
+  }
+  #yarnCalcModal>div>div:first-child button.btn-on-dark:hover:not(:disabled) {
+    background:var(--brand-purple-hover)!important;
+  }
+</style>
+<style id="selection-popup-fix">
+</style>
+<style>
+  #yarnCalcModal .yc-add-color {
+    background: var(--brand-purple) !important;
+    color: var(--surface) !important;
+    border-color: var(--brand-purple) !important;
+    border-radius: 9px !important;
+  }
+  #yarnCalcModal .yc-remove-color {
+    background: var(--brand-purple) !important;
+    color: white !important;
+    border-color: var(--brand-purple) !important;
+    border-radius: 9px !important;
+    min-width: 32px;
+    padding: 6px 10px !important;
+  }
+  /* Sett Advisor header Close: white pill, matches the rounded family */
+  #yarnLibraryModal button.btn-on-dark {
+    background: white !important;
+    color: var(--brand-purple) !important;
+    border: 1px solid transparent !important;
+    border-radius: 9px !important;
+    padding: 9px 16px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
+  }
+  #yarnLibraryModal button.btn-on-dark:hover:not(:disabled) {
+    background: var(--surface-3) !important;
+  }
+  /* ── Every modal's text Close button: white pill, purple ink, rounded family shape ──
+  #yarnCalcModal>div>div:first-child button.btn-on-dark {
+    background: white !important;
+    color: var(--brand-purple) !important;
+    border-color: transparent !important;
+  }
+  /* ── Square-rectangular buttons join the rounded 9px family ──
+</style>
+<style>
+
+/* ═══ Tab shell ═══ */
+* { box-sizing: border-box; }
+body { margin:0; font-family:'Raleway',sans-serif; background:var(--bg); color:var(--text); }
+.wyt-header { background:linear-gradient(135deg,var(--brand-purple),var(--brand-blue)); color:white;
+  padding:14px 22px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+.wyt-brand { display:flex; align-items:center; gap:12px; }
+.wyt-brand img { height:40px; width:auto; border-radius:8px; }
+.wyt-brand .t1 { font-size:1.05em; font-weight:800; letter-spacing:0.03em; line-height:1.2; }
+.wyt-brand .t2 { font-size:0.68em; opacity:0.75; letter-spacing:0.06em; }
+.wyt-tabs { display:flex; gap:8px; flex-wrap:wrap; }
+.wyt-tab { padding:10px 20px; border-radius:9px; border:1px solid rgba(255,255,255,0.35);
+  background:rgba(255,255,255,0.14); color:white; font-family:'Raleway',sans-serif;
+  font-size:13px; font-weight:700; letter-spacing:0.04em; cursor:pointer; transition:background 0.12s; }
+.wyt-tab:hover { background:rgba(255,255,255,0.24); }
+.wyt-tab.active { background:white; color:var(--brand-purple); border-color:white; }
+.wyt-main { padding:20px; max-width:1180px; margin:0 auto; }
+.tab-page { display:none; }
+.tab-page.active { display:block; animation:wyt-fade 0.15s ease-out; }
+@keyframes wyt-fade { from { opacity:0.4; } to { opacity:1; } }
+.wyt-footer { text-align:center; font-size:0.72em; color:var(--text-muted); padding:18px 0 26px; }
+
+/* ═══ Modal neutralizer: modals become page sections ═══ */
+.tab-page [id$="Modal"] {
+  display:block !important; position:static !important; inset:auto !important;
+  z-index:auto !important; background:transparent !important; padding:0 !important;
+  margin:0 !important; align-items:stretch !important; justify-content:flex-start !important;
+  max-height:none !important; overflow:visible !important;
+}
+.tab-page [id$="Modal"] > div {
+  max-width:none !important; width:100% !important; margin:0 !important;
+  max-height:none !important; box-shadow:none !important; border-radius:12px;
+}
+.tab-page [id$="Modal"] .modal-shell-fix {
+  display:flex; flex-direction:column; max-height:none !important;
+}
+/* ═══ Hide loom-only controls (no loom in the standalone app) ═══ */
+[onclick*="ycLoadCurrentPattern"], [onclick*="ycSyncFromLoom"], [onclick*="ycSyncColors"],
+[onclick="closeYarnCalc()"], [onclick="closeSettAdvisor()"], [onclick="closeYarnLibrary()"],
+[title="Close yarn calculator"], [title="Close notes"] { display:none !important; }
+/* Spacer rows that lost their buttons */
+#yc_colorRows + .btn-secondary[style*="margin-left:6px"] { margin-left:0 !important; }
+
+</style>
+</head>
+<body>
+  <header class="wyt-header">
+    <div class="wyt-brand">
+      <img src="icon.png" alt="">
+      <div>
+        <div class="t1">Weavers Yarn Tools</div>
+        <div class="t2">YARN CALCULATOR · SETT ADVISOR · YARN LIBRARY — v1.0.0</div>
+      </div>
+    </div>
+    <nav class="wyt-tabs">
+      <button class="wyt-tab active" data-tab="calc" onclick="showTab('calc')">🧶 Yarn Calculator</button>
+      <button class="wyt-tab" data-tab="sett" onclick="showTab('sett')">📐 Sett Advisor</button>
+      <button class="wyt-tab" data-tab="library" onclick="showTab('library')">📚 Yarn Library</button>
+    </nav>
+  </header>
+
+  <main class="wyt-main">
+    <section class="tab-page active" id="page-calc">
+<!-- Yarn Calculator Modal -->
+<div id="yarnCalcModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:flex-start;justify-content:center;overflow-y:auto;padding:24px 16px;">
+  <div style="background:white;border-radius:12px;width:100%;max-width:780px;margin:auto;font-family:'Raleway',sans-serif;overflow:hidden;box-shadow:0 16px 56px rgba(0,0,50,0.3);">
+
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,var(--brand-blue),var(--brand-purple));padding:18px 24px;display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="font-size:1.1em;font-weight:800;color:white;letter-spacing:0.02em;">🧶 Yarn Calculator &amp; Cost Estimator</div>
+        <div style="font-size:0.75em;color:rgba(255,255,255,0.7);margin-top:3px;">Estimate yardage, weight and cost for your project</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <select id="yc_currency" onchange="ycUpdateCurrency()" style="font-family:'Raleway',sans-serif;font-size:11px;font-weight:700;padding:5px 8px;border:1.5px solid rgba(255,255,255,0.45);border-radius:6px;background:var(--brand-blue);color:white;cursor:pointer;outline:none;">
+          <option value="CAD" data-symbol="CA$" style="background:var(--brand-blue);color:white;">🇨🇦 CAD</option>
+          <option value="USD" data-symbol="US$" style="background:var(--brand-blue);color:white;">🇺🇸 USD</option>
+          <option value="GBP" data-symbol="£" style="background:var(--brand-blue);color:white;">🇬🇧 GBP</option>
+          <option value="EUR" data-symbol="€" style="background:var(--brand-blue);color:white;">🇪🇺 EUR</option>
+          <option value="AUD" data-symbol="A$" style="background:var(--brand-blue);color:white;">🇦🇺 AUD</option>
+          <option value="NZD" data-symbol="NZ$" style="background:var(--brand-blue);color:white;">🇳🇿 NZD</option>
+        </select>
+        <span id="yc_rateIndicator" style="font-size:9px;color:rgba(255,255,255,0.65);font-weight:600;font-family:'Raleway',sans-serif;white-space:nowrap;"></span>
+        <button class="btn" onclick="ycLoadCurrentPattern()" title="Load current pattern dimensions" style="white-space:nowrap">Use This Pattern</button>
+        <button class="btn-on-dark" onclick="closeYarnCalc()" title="Close yarn calculator">Close</button>
+      </div>
+    </div>
+
+    <div style="padding:22px 24px;display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+
+      <!-- LEFT: Inputs -->
+      <div>
+        <div style="font-size:10px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--brand-blue);margin-bottom:14px;border-bottom:2px solid var(--btn-bg);padding-bottom:6px;">Project Dimensions</div>
+
+        <div class="yc-row">
+          <label class="yc-label">Warp Width (inches)</label>
+          <input class="yc-input" id="yc_warpWidth" type="number" value="12" min="1" step="0.5" oninput="ycCalc()">
+          <button class="yc-sync" onclick="ycSyncFromLoom('width')" title="Sync from current design">↙ sync</button>
+        </div>
+        <div class="yc-row">
+          <label class="yc-label">Sett / EPI (ends per inch)</label>
+          <input class="yc-input" id="yc_epi" type="number" value="10" min="1" step="1" oninput="ycCalc()">
+          <button class="yc-sync" onclick="ycSyncFromLoom('epi')" title="Sync from current design">↙ sync</button>
+        </div>
+        <div class="yc-row">
+          <label class="yc-label">Warp Length (inches)</label>
+          <input class="yc-input" id="yc_warpLen" type="number" value="60" min="1" step="1" oninput="ycCalc()">
+        </div>
+        <div class="yc-row">
+          <label class="yc-label">Weft PPI (picks per inch)</label>
+          <input class="yc-input" id="yc_ppi" type="number" value="10" min="1" step="1" oninput="ycCalc()">
+          <button class="yc-sync" onclick="ycSyncFromLoom('ppi')" title="Sync from current design">↙ sync</button>
+        </div>
+        <div class="yc-row">
+          <label class="yc-label">Woven Length (inches)</label>
+          <input class="yc-input" id="yc_wovenLen" type="number" value="48" min="1" step="1" oninput="ycCalc()">
+        </div>
+        <div class="yc-row">
+          <label class="yc-label">Warp Waste / loom waste (inches)</label>
+          <input class="yc-input" id="yc_waste" type="number" value="24" min="0" step="1" oninput="ycCalc()">
+        </div>
+        <div class="yc-row">
+          <label class="yc-label">Warp takeup % (draw-in)</label>
+          <input class="yc-input" id="yc_warpTakeup" type="number" value="10" min="0" max="50" step="1" oninput="ycCalc()">
+        </div>
+        <div class="yc-row">
+          <label class="yc-label">Weft takeup %</label>
+          <input class="yc-input" id="yc_weftTakeup" type="number" value="15" min="0" max="50" step="1" oninput="ycCalc()">
+        </div>
+
+        <div style="font-size:10px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--brand-blue);margin:18px 0 14px;border-bottom:2px solid var(--btn-bg);padding-bottom:6px;">Yarn Specs</div>
+
+        <div class="yc-row">
+          <label class="yc-label">Yarn weight category</label>
+          <select class="yc-input" id="yc_weightCat" onchange="ycWeightPreset()" style="cursor:pointer;">
+            <option value="custom">Custom</option>
+            <option value="laceweight">Laceweight (~1800 ypp)</option>
+            <option value="fingering" selected>Fingering / Sock (~1500 ypp)</option>
+            <option value="sport">Sport (~1200 ypp)</option>
+            <option value="dk">DK (~1000 ypp)</option>
+            <option value="worsted">Worsted (~800 ypp)</option>
+            <option value="bulky">Bulky (~400 ypp)</option>
+          </select>
+        </div>
+        <div class="yc-row">
+          <label class="yc-label">Yards per pound (ypp)</label>
+          <input class="yc-input" id="yc_ypp" type="number" value="1500" min="1" step="10" oninput="ycCalc()">
+        </div>
+
+        <div style="font-size:10px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--brand-blue);margin:18px 0 12px;border-bottom:2px solid var(--btn-bg);padding-bottom:6px;">Shrinkage &amp; Finishing</div>
+        <div class="yc-row">
+          <label class="yc-label">Expected shrinkage %</label>
+          <input class="yc-input" id="yc_shrinkage" type="number" value="8" min="0" max="40" step="1" oninput="ycCalc()">
+        </div>
+        <div style="background:#f5f0e8;border-radius:6px;padding:10px 14px;margin-top:8px;font-size:12px;color:var(--text);line-height:1.6;" id="yc_finishedSizes"></div>
+
+        <div style="font-size:10px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--brand-blue);margin:18px 0 14px;border-bottom:2px solid var(--btn-bg);padding-bottom:6px;">Colour Split</div>
+        <div id="yc_colorRows" style="display:flex;flex-direction:column;gap:8px;"></div>
+        <button class="yc-add-color btn-secondary" onclick="ycAddColor()" title="Add a colour to your yarn list" style="margin-top:10px">+ Add Colour</button>
+        <button class="btn-secondary" onclick="ycSyncColors()" title="Sync colours from your pattern palette" style="margin-top:10px;margin-left:6px">↙ Sync palette</button>
+      </div>
+
+      <!-- RIGHT: Results -->
+      <div>
+        <div style="font-size:10px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--brand-blue);margin-bottom:14px;border-bottom:2px solid var(--btn-bg);padding-bottom:6px;">Totals</div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">
+          <div class="yc-stat-card"><div class="yc-stat-label">Total Warp Ends</div><div class="yc-stat-val" id="yc_ends">—</div></div>
+          <div class="yc-stat-card"><div class="yc-stat-label">Total Warp Yardage</div><div class="yc-stat-val" id="yc_warpYds">—</div></div>
+          <div class="yc-stat-card"><div class="yc-stat-label">Total Weft Yardage</div><div class="yc-stat-val" id="yc_weftYds">—</div></div>
+          <div class="yc-stat-card"><div class="yc-stat-label">Grand Total Yardage</div><div class="yc-stat-val" id="yc_totalYds" style="color:var(--brand-purple);">—</div></div>
+          <div class="yc-stat-card"><div class="yc-stat-label">Total Weight</div><div class="yc-stat-val" id="yc_grams">—</div></div>
+          <div class="yc-stat-card"><div class="yc-stat-label">Skeins Needed</div><div class="yc-stat-val" id="yc_skeins">—</div></div>
+        </div>
+
+        <div style="font-size:10px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--brand-blue);margin-bottom:12px;border-bottom:2px solid var(--btn-bg);padding-bottom:6px;">Per-Colour Breakdown</div>
+        <div id="yc_breakdown" style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px;"></div>
+
+        <div style="font-size:10px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--brand-blue);margin-bottom:12px;border-bottom:2px solid var(--btn-bg);padding-bottom:6px;">Cost Estimate</div>
+        <div class="yc-row">
+          <label class="yc-label">Skein size (yards)</label>
+          <input class="yc-input" id="yc_skeinSize" type="number" value="400" min="1" step="10" oninput="ycCalc()">
+        </div>
+        <div class="yc-row">
+          <label class="yc-label">Price per skein (<span id="yc_currencySymbol">CA$</span>)</label>
+          <input class="yc-input" id="yc_pricePerSkein" type="number" value="12" min="0" step="0.50" oninput="ycCalc()">
+        </div>
+        <div id="yc_costCard" style="background:var(--bg);border-radius:8px;padding:14px 16px;margin-top:10px;display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div style="font-size:10px;font-weight:700;color:var(--brand-blue);text-transform:uppercase;letter-spacing:0.06em;">Estimated Total Cost</div>
+            <div id="yc_totalCost" style="font-size:1.8em;font-weight:800;color:var(--success);margin-top:4px;">—</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:10px;color:var(--brand-blue);font-weight:600;" id="yc_costNote"></div>
+          </div>
+        </div>
+
+        <button class="btn" onclick="ycPrint()" title="Print yarn estimate" style="margin-top:16px;width:100%;padding:9px 14px">Print Estimate</button>
+        <div style="display:flex;gap:8px;margin-top:8px;">
+          <button class="btn-ghost" onclick="ycResetDefault()" style="flex:1">Default</button>
+          <button class="btn" onclick="ycClear()" style="flex:1">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </section>
+    <section class="tab-page" id="page-sett">
+<!-- ═══ SETT ADVISOR MODAL ═══ -->
+<div id="settAdvisorModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:white;border-radius:12px;width:100%;max-width:560px;margin:auto;font-family:'Raleway',sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.5);overflow:hidden;">
+    <div style="background:var(--brand-purple);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="font-size:1.05em;font-weight:800;color:white;letter-spacing:0.02em;">📐 Sett Advisor</div>
+        <div style="font-size:0.72em;color:rgba(255,255,255,0.65);margin-top:2px;">Find the right EPI for your yarn and structure</div>
+      </div>
+      <button class="btn-on-dark" onclick="closeSettAdvisor()">Close</button>
+    </div>
+    <div style="padding:22px 24px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;">
+        <div>
+          <label style="display:block;font-size:10px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--brand-blue);margin-bottom:6px;">Wraps Per Inch (WPI)</label>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <input id="sa_wpi" type="number" value="18" min="1" max="120" oninput="settCalc()" style="width:70px;padding:7px 10px;border:1.5px solid var(--btn-hover);border-radius:6px;font-family:'Raleway',sans-serif;font-size:14px;font-weight:700;color:var(--brand-blue);outline:none;">
+            <span style="font-size:0.75em;color:var(--brand-blue);font-weight:600;line-height:1.4;">Wrap yarn snugly<br>around a ruler,<br>count per inch</span>
+          </div>
+        </div>
+        <div>
+          <label style="display:block;font-size:10px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--brand-blue);margin-bottom:6px;">Weave Structure</label>
+          <select id="sa_structure" onchange="settCalc()" style="width:100%;padding:7px 10px;border:1.5px solid var(--btn-hover);border-radius:6px;font-family:'Raleway',sans-serif;font-size:12px;font-weight:700;color:var(--brand-blue);outline:none;background:white;cursor:pointer;">
+            <option value="plain">Plain Weave</option>
+            <option value="twill" selected>2/2 Twill</option>
+            <option value="twill13">1/3 or 3/1 Twill</option>
+            <option value="basket">Basket Weave (2/2)</option>
+            <option value="lace">Lace / Open weave</option>
+            <option value="warpfaced">Warp-faced (bands, rugs)</option>
+            <option value="weftfaced">Weft-faced (tapestry)</option>
+            <option value="doubleweave">Double Weave</option>
+            <option value="huck">Huck Lace / M's &amp; O's</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-bottom:18px;">
+        <div style="font-size:10px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--brand-blue);margin-bottom:8px;">Common Yarn Weights</div>
+        <select id="sa_presets" onchange="settApplyPreset(this)" style="width:100%;padding:7px 10px;border:1.5px solid var(--btn-hover);border-radius:6px;font-family:'Raleway',sans-serif;font-size:12px;font-weight:700;color:var(--brand-blue);outline:none;background:white;cursor:pointer;transition:border-color 0.15s;" onfocus="this.style.borderColor='#4D167C'" onblur="this.style.borderColor='#d0d8f0'">
+          <option value="18" data-detail="Default — adjust the WPI input above to match your yarn.">&mdash; Choose a yarn weight &mdash;</option>
+          <option value="6"  data-detail="Thick wool used for rugs, rya knots, and heavy throws. Quick to weave; very textured.">Rya / Rug wool (6 WPI)</option>
+          <option value="8"  data-detail="Bulky weight — fast to weave, soft, great for blankets and scarves.">Bulky (8 WPI)</option>
+          <option value="10" data-detail="Aran weight — warm, structured, good for outerwear and bags.">Aran (10 WPI)</option>
+          <option value="12" data-detail="Worsted — classic sweater weight, the most versatile.">Worsted (12 WPI)</option>
+          <option value="16" data-detail="DK — fine, even, drape-friendly; great for clothing.">DK (16 WPI)</option>
+          <option value="22" data-detail="Sport — lighter than DK, drapey and breathable.">Sport (22 WPI)</option>
+          <option value="28" data-detail="Fingering — fine, smooth, excellent for detailed patterns and socks.">Fingering (28 WPI)</option>
+          <option value="40" data-detail="Laceweight — delicate, often held doubled. Openwork and shawls.">Laceweight (40 WPI)</option>
+          <option value="60" data-detail="10/2 cotton — fine, firm, absorbent. Dish towels, table linens.">10/2 Cotton (60 WPI)</option>
+          <option value="80" data-detail="20/2 cotton — very fine; intricate patterning, fine table linens.">20/2 Cotton (80 WPI)</option>
+        </select>
+        <div id="sa_presetDetail" style="font-size:0.78em;color:var(--brand-blue);margin-top:6px;min-height:1.2em;line-height:1.5;font-style:italic;">Default &mdash; adjust the WPI input above to match your yarn.</div>
+      </div>
+      <div style="background:var(--surface);border-radius:10px;padding:18px;border:1.5px solid var(--surface-2);">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;">
+          <div style="background:var(--brand-blue);border-radius:8px;padding:12px;text-align:center;">
+            <div style="font-size:9px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:4px;">Warp-faced</div>
+            <div id="sa_wf_val" style="font-size:1.6em;font-weight:800;color:white;line-height:1;">—</div>
+            <div style="font-size:9px;color:rgba(255,255,255,0.55);margin-top:2px;">EPI</div>
+          </div>
+          <div style="background:var(--brand-purple);border-radius:8px;padding:12px;text-align:center;box-shadow:0 4px 12px rgba(77,22,124,0.35);">
+            <div style="font-size:9px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.65);margin-bottom:4px;">✓ Balanced</div>
+            <div id="sa_bal_val" style="font-size:1.8em;font-weight:800;color:white;line-height:1;">—</div>
+            <div style="font-size:9px;color:rgba(255,255,255,0.6);margin-top:2px;">EPI</div>
+          </div>
+          <div style="background:var(--surface-2);border:1.5px solid var(--brand-blue);border-radius:8px;padding:12px;text-align:center;">
+            <div style="font-size:9px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--brand-blue);margin-bottom:4px;">Weft-faced</div>
+            <div id="sa_weftf_val" style="font-size:1.6em;font-weight:800;color:var(--brand-blue);line-height:1;">—</div>
+            <div style="font-size:9px;color:var(--brand-blue);margin-top:2px;">EPI</div>
+          </div>
+        </div>
+        <div id="sa_note" style="font-size:0.8em;color:var(--brand-blue);line-height:1.6;border-top:1px solid var(--surface-2);padding-top:10px;"></div>
+        <div id="sa_range" style="font-size:0.73em;color:var(--brand-blue);margin-top:6px;font-style:italic;font-weight:600;"></div>
+      </div>
+      <div style="margin-top:14px;display:flex;gap:10px;justify-content:flex-end;align-items:center;">
+        <span id="sa_apply_label" style="font-size:0.78em;color:var(--brand-blue);font-weight:600;"></span>
+        <button class="btn" onclick="settApplyBalanced(event)">→ Apply Balanced EPI to Designer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    </section>
+    <section class="tab-page" id="page-library">
+<!-- ═══ YARN LIBRARY MODAL ═══ -->
+<div id="yarnLibraryModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:white;border-radius:12px;width:100%;max-width:1180px;margin:auto;font-family:'Raleway',sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.5);overflow:hidden;display:flex;flex-direction:column;max-height:92vh;">
+    <div style="background:linear-gradient(135deg,var(--brand-blue),var(--brand-purple));padding:16px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+      <div>
+        <div style="font-size:1.05em;font-weight:800;color:white;letter-spacing:0.02em;">📚 Yarn Library</div>
+        <div style="font-size:0.72em;color:rgba(255,255,255,0.7);margin-top:2px;">Master Yarn Chart 2014 — pick a yarn and apply it to your design</div>
+      </div>
+      <button class="btn-on-dark" onclick="closeYarnLibrary()">Close</button>
+    </div>
+    <div style="padding:10px 20px 6px;background:var(--header-bg);border-bottom:1px solid var(--btn-bg);flex-shrink:0;">
+      <div style="font-size:0.7em;color:var(--text-muted);font-style:italic;letter-spacing:0.02em;line-height:1.5;">
+        Yarn data courtesy of <strong style="color:var(--brand-blue);font-style:normal;">Handwoven Magazine</strong> — Master Yarn Chart, 2014
+        (<a href="https://handwovenmagazine.com" target="_blank" rel="noopener" style="color:var(--brand-purple);text-decoration:none;font-weight:700;font-style:normal;">handwovenmagazine.com</a>)
+      </div>
+      <div class="yl-tabs" style="display:flex;gap:6px;margin-top:8px;">
+        <button id="yl_tab_all" class="yl-tab active" onclick="ylSetView('all')">All Yarns</button>
+        <button id="yl_tab_fav" class="yl-tab" onclick="ylSetView('favorites')">Favorites</button>
+      </div>
+      <div class="yl-legend" style="display:flex;flex-wrap:wrap;gap:3px 10px;margin-top:8px;font-size:0.68em;color:#4a4a6a;line-height:1.6;">
+        <span style="font-weight:700;color:var(--text);margin-right:4px;">Card colors:</span>
+        <span class="yl-leg-item"><span class="yl-leg-dot" style="background:#E8F0FE;"></span>Cotton</span>
+        <span class="yl-leg-item"><span class="yl-leg-dot" style="background:#FCE8E8;"></span>Wool &amp; Hair</span>
+        <span class="yl-leg-item"><span class="yl-leg-dot" style="background:#FFF8E1;"></span>Silk</span>
+        <span class="yl-leg-item"><span class="yl-leg-dot" style="background:var(--surface-warm);"></span>Linen</span>
+        <span class="yl-leg-item"><span class="yl-leg-dot" style="background:#F3E5F5;"></span>Rayon</span>
+        <span class="yl-leg-item"><span class="yl-leg-dot" style="background:#E0F2F1;"></span>Tencel</span>
+        <span class="yl-leg-item"><span class="yl-leg-dot" style="background:#E8F5E9;"></span>Bamboo &amp; Soy</span>
+        <span class="yl-leg-item"><span class="yl-leg-dot" style="background:#F0EDE3;"></span>Hemp &amp; Plant</span>
+        <span class="yl-leg-item"><span class="yl-leg-dot" style="background:#ECEFF1;"></span>Blend</span>
+        <span class="yl-leg-item"><span class="yl-leg-dot" style="background:#FCE4EC;"></span>Ribbon</span>
+        <span class="yl-leg-item"><span class="yl-leg-dot" style="background:#FFF3E0;"></span>Novelty</span>
+        <span class="yl-leg-item"><span class="yl-leg-dot" style="background:#FAFAFA;"></span>Metallic</span>
+      </div>
+    </div>
+    <div class="yl-toolbar">
+      <select id="yl_filter" onchange="_ylFilter=this.value; ylRender();">
+      </select>
+      <input type="search" id="yl_search" placeholder="Search by name, brand, or fiber…" oninput="_ylQuery=this.value; ylRender();" />
+      <span class="yl-count" id="yl_count">0 of 0 yarns</span>
+    </div>
+    <div class="yl-grid" id="yl_grid"></div>
+  </div>
+</div>
+
+    </section>
+  </main>
+
+  <footer class="wyt-footer">
+    Yarn data courtesy of Handwoven Magazine — Master Yarn Chart, 2014 · WeaversCanvas tools by Eldon · v1.0.0
+  </footer>
+
+<script>
+    // ── Toast notifications ───────────────────────────────────────────────────
+    // Lightweight, self-cleaning, screen-reader friendly.
+    (function installToasts() {
+        let host = null;
+        function ensureHost() {
+            if (host && document.body.contains(host)) return host;
+            host = document.createElement('div');
+            host.id = '_toastHost';
+            host.setAttribute('role', 'status');
+            host.setAttribute('aria-live', 'polite');
+            host.style.cssText = [
+                'position:fixed', 'left:50%', 'transform:translateX(-50%)',
+                'bottom:24px', 'z-index:100000', 'display:flex',
+                'flex-direction:column', 'gap:8px', 'align-items:center',
+                'pointer-events:none', 'max-width:90vw'
+            ].join(';');
+            document.body.appendChild(host);
+            return host;
+        }
+        window._toast = function (message, kind) {
+            try {
+                const h = ensureHost();
+                const el = document.createElement('div');
+                const isErr = kind === 'error';
+                el.textContent = message;
+                el.style.cssText = [
+                    'pointer-events:auto', 'padding:10px 18px', 'border-radius:8px',
+                    'font-family:Raleway,sans-serif', 'font-size:13px', 'font-weight:600',
+                    'color:#fff', 'box-shadow:0 6px 20px rgba(0,0,0,0.28)',
+                    'background:' + (isErr ? '#cc0033' : '#4D167C'),
+                    'opacity:0', 'transition:opacity .18s ease'
+                ].join(';');
+                h.appendChild(el);
+                requestAnimationFrame(() => { el.style.opacity = '1'; });
+                setTimeout(() => {
+                    el.style.opacity = '0';
+                    setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 220);
+                }, isErr ? 6000 : 3200);
+            } catch (_) {
+                try { console.warn('[WeaversCanvas] ' + message); } catch (__) {}
+            }
+        };
+    })();
+
+    // ── HTML escape helper (prevents XSS in innerHTML) ────────────────────────
+// ════════════════════════════════════════════════════════════════════════════
+// CORE — helpers, error boundaries & toasts
+// ════════════════════════════════════════════════════════════════════════════
+    function escHtml(s) {
+        if (s == null) return '';
+        return String(s).replace(/[<>&"']/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    // ── Notepad ───────────────────────────────────────────────────────────────
+    let notepadCurrentTab = 0;
+    const NOTE_TABS = 4;
+
+    // ── Yarn Calculator ───────────────────────────────────────────────────────
+// ════════════════════════════════════════════════════════════════════════════
+// YARN CALCULATOR — yardage, weight & cost
+// ════════════════════════════════════════════════════════════════════════════
+    const YC_WEIGHT_YPP = { laceweight:1800, fingering:1500, sport:1200, dk:1000, worsted:800, bulky:400 };
+
+    let ycColors = [
+      { name:'Warp', color:'#001E87', warpPct:100, weftPct:0, priceOverride:'' },
+      { name:'Weft', color:'#f5f0e8', warpPct:0, weftPct:100, priceOverride:'' }
+    ];
+
+    function ycGetSymbol() {
+      const sel = document.getElementById('yc_currency');
+      if (!sel) return 'CA$';
+      return sel.options[sel.selectedIndex].dataset.symbol || 'CA$';
+    }
+
+    let _ycRates = null;     // cached rates relative to CAD
+    let _ycRatesFetched = false;
+    let _ycPrevCurrency = 'CAD';
+
+    async function ycFetchRates() {
+      if (_ycRates) return _ycRates;
+      try {
+        // Timeout so a hanging request can never freeze the calculator UI.
+        const ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+        const timer = ctrl ? setTimeout(() => ctrl.abort(), 8000) : null;
+        let res;
+        try {
+          res = await fetch(
+            'https://api.frankfurter.dev/v1/latest?base=CAD&symbols=USD,GBP,EUR,AUD,NZD,CAD',
+            ctrl ? { signal: ctrl.signal } : undefined
+          );
+        } finally {
+          if (timer) clearTimeout(timer);
+        }
+        if (!res.ok) throw new Error('Rate fetch failed (HTTP ' + res.status + ')');
+        const data = await res.json();
+        _ycRates = data.rates || {};
+        _ycRates['CAD'] = 1;
+        _ycRatesFetched = true;
+        return _ycRates;
+      } catch(e) {
+        console.warn('Exchange rate fetch failed:', e);
+        return { CAD:1, USD:0.74, GBP:0.58, EUR:0.69, AUD:1.12, NZD:1.23 }; // fallback
+      }
+    }
+
+    async function ycUpdateCurrency() {
+      try {
+        await _ycUpdateCurrencyInner();
+      } catch (err) {
+        console.error('[WeaversCanvas] Currency update failed', err);
+        if (typeof _toast === 'function') {
+          _toast('Could not update currency: ' + ((err && err.message) || err), 'error');
+        }
+      }
+    }
+
+    async function _ycUpdateCurrencyInner() {
+      const sel = document.getElementById('yc_currency');
+      if (!sel) return;
+      const newCurrency = sel.value;
+      const sym = ycGetSymbol();
+
+      // Fetch rates and convert the price per skein from old currency to new
+      const rates = await ycFetchRates();
+      const priceInput = document.getElementById('yc_pricePerSkein');
+      const oldPrice = parseFloat(priceInput.value) || 0;
+      const oldRate = rates[_ycPrevCurrency] || 1;
+      const newRate = rates[newCurrency] || 1;
+      const convertedPrice = (oldPrice / oldRate) * newRate;
+      priceInput.value = convertedPrice.toFixed(2);
+
+      // Also convert any per-colour price overrides
+      ycColors.forEach(col => {
+        if (col.priceOverride !== '') {
+          const old = parseFloat(col.priceOverride) || 0;
+          col.priceOverride = ((old / oldRate) * newRate).toFixed(2);
+        }
+      });
+
+      _ycPrevCurrency = newCurrency;
+
+      // Update all symbol labels
+      document.getElementById('yc_currencySymbol').textContent = sym;
+      document.querySelectorAll('.yc-sym').forEach(el => el.textContent = sym);
+      ycRenderColorRows();
+      ycCalc();
+
+      // Show live rate indicator
+      const indicator = document.getElementById('yc_rateIndicator');
+      if (indicator && _ycRatesFetched) {
+        indicator.textContent = newCurrency === 'CAD' ? '' : `1 CAD = ${newRate.toFixed(4)} ${newCurrency} (live)`;
+      }
+    }
+
+    function ycResetDefault() {
+      // Restore all inputs to factory defaults
+      document.getElementById('yc_warpWidth').value   = 12;
+      document.getElementById('yc_epi').value          = 10;
+      document.getElementById('yc_warpLen').value      = 60;
+      document.getElementById('yc_ppi').value          = 10;
+      document.getElementById('yc_wovenLen').value     = 48;
+      document.getElementById('yc_waste').value        = 24;
+      document.getElementById('yc_warpTakeup').value   = 10;
+      document.getElementById('yc_weftTakeup').value   = 15;
+      document.getElementById('yc_weightCat').value    = 'fingering';
+      document.getElementById('yc_ypp').value          = 1500;
+      document.getElementById('yc_skeinSize').value    = 400;
+      document.getElementById('yc_pricePerSkein').value = 12;
+      document.getElementById('yc_shrinkage').value    = 8;
+      ycColors = [
+        { name:'Warp', color:'#001E87', warpPct:100, weftPct:0,   priceOverride:'' },
+        { name:'Weft', color:'#f5f0e8', warpPct:0,   weftPct:100, priceOverride:'' }
+      ];
+      ycRenderColorRows();
+      ycCalc();
+    }
+
+    function ycClear() {
+      // Zero out all numeric inputs and prices
+      document.getElementById('yc_warpWidth').value    = 0;
+      document.getElementById('yc_epi').value          = 0;
+      document.getElementById('yc_warpLen').value      = 0;
+      document.getElementById('yc_ppi').value          = 0;
+      document.getElementById('yc_wovenLen').value     = 0;
+      document.getElementById('yc_waste').value        = 0;
+      document.getElementById('yc_warpTakeup').value   = 0;
+      document.getElementById('yc_weftTakeup').value   = 0;
+      document.getElementById('yc_ypp').value          = 0;
+      document.getElementById('yc_skeinSize').value    = 0;
+      document.getElementById('yc_pricePerSkein').value = 0;
+      document.getElementById('yc_shrinkage').value    = 0;
+      ycColors.forEach(col => col.priceOverride = '');
+      ycRenderColorRows();
+      ycCalc();
+    }
+    function ycWeightPreset() {
+      const cat = document.getElementById('yc_weightCat').value;
+      if (YC_WEIGHT_YPP[cat]) {
+        document.getElementById('yc_ypp').value = YC_WEIGHT_YPP[cat];
+        ycCalc();
+      }
+    }
+    function ycAddColor() {
+      ycColors.push({ name:'New Colour', color:'#888888', warpPct:0, weftPct:0, priceOverride:'' });
+      ycRenderColorRows();
+      ycCalc();
+    }
+
+    function ycRemoveColor(i) {
+      ycColors.splice(i, 1);
+      ycRenderColorRows();
+      ycCalc();
+    }
+
+    function ycRenderColorRows() {
+      const c = document.getElementById('yc_colorRows');
+      c.innerHTML = '';
+      ycColors.forEach((col, i) => {
+        const row = document.createElement('div');
+        row.className = 'yc-color-row';
+        row.innerHTML = `
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div style="width:18px;height:18px;border-radius:3px;background:${col.color};border:1px solid rgba(0,0,0,0.2);flex-shrink:0;"></div>
+            <input type="text" value="${escHtml(col.name)}"
+              style="flex:1;min-width:60px;padding:3px 6px;border:1px solid var(--border);border-radius:4px;font-family:'Raleway',sans-serif;font-size:11px;font-weight:600;-webkit-user-select:text!important;user-select:text!important;"
+              oninput="ycColors[${i}].name=this.value;ycCalc()">
+            <input type="color" value="${col.color}" style="width:24px;height:24px;border:none;padding:0;cursor:pointer;flex-shrink:0;"
+              oninput="ycColors[${i}].color=this.value;ycRenderColorRows();ycCalc()">
+            ${ycColors.length > 1 ? `<button class="yc-remove-color btn" onclick="ycRemoveColor(${i})" style="flex-shrink:0">×</button>` : ''}
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <div style="display:flex;align-items:center;gap:4px;">
+              <span style="font-size:10px;color:var(--brand-blue);font-weight:700;white-space:nowrap;">Warp %</span>
+              <input type="number" value="${col.warpPct}" min="0" max="100" step="5"
+                style="width:52px;padding:3px 5px;border:1px solid var(--border);border-radius:4px;font-family:'Raleway',sans-serif;font-size:11px;text-align:right;-webkit-user-select:text!important;user-select:text!important;"
+                oninput="ycColors[${i}].warpPct=parseFloat(this.value)||0;ycCalc()">
+            </div>
+            <div style="display:flex;align-items:center;gap:4px;">
+              <span style="font-size:10px;color:var(--brand-blue);font-weight:700;white-space:nowrap;">Weft %</span>
+              <input type="number" value="${col.weftPct}" min="0" max="100" step="5"
+                style="width:52px;padding:3px 5px;border:1px solid var(--border);border-radius:4px;font-family:'Raleway',sans-serif;font-size:11px;text-align:right;-webkit-user-select:text!important;user-select:text!important;"
+                oninput="ycColors[${i}].weftPct=parseFloat(this.value)||0;ycCalc()">
+            </div>
+            <div style="display:flex;align-items:center;gap:4px;">
+              <span style="font-size:10px;color:var(--brand-blue);font-weight:700;white-space:nowrap;"><span class="yc-sym">${ycGetSymbol()}</span>/skein</span>
+              <input type="number" value="${col.priceOverride}" min="0" step="0.5" placeholder="—"
+                style="width:56px;padding:3px 5px;border:1px solid var(--border);border-radius:4px;font-family:'Raleway',sans-serif;font-size:11px;text-align:right;-webkit-user-select:text!important;user-select:text!important;"
+                oninput="ycColors[${i}].priceOverride=this.value;ycCalc()">
+            </div>
+          </div>
+        `;
+        c.appendChild(row);
+      });
+    }
+
+    function ycCalc() {
+      const warpWidth   = parseFloat(document.getElementById('yc_warpWidth').value) || 0;
+      const epi         = parseFloat(document.getElementById('yc_epi').value) || 0;
+      const warpLen     = parseFloat(document.getElementById('yc_warpLen').value) || 0;
+      const ppi         = parseFloat(document.getElementById('yc_ppi').value) || 0;
+      const wovenLen    = parseFloat(document.getElementById('yc_wovenLen').value) || 0;
+      const waste       = parseFloat(document.getElementById('yc_waste').value) || 0;
+      const warpTakeup  = (parseFloat(document.getElementById('yc_warpTakeup').value) || 0) / 100;
+      const weftTakeup  = (parseFloat(document.getElementById('yc_weftTakeup').value) || 0) / 100;
+      const ypp         = parseFloat(document.getElementById('yc_ypp').value) || 1;
+      const skeinSize   = parseFloat(document.getElementById('yc_skeinSize').value) || 400;
+      const pricePerSkein = parseFloat(document.getElementById('yc_pricePerSkein').value) || 0;
+      const shrinkage   = (parseFloat(document.getElementById('yc_shrinkage').value) || 0) / 100;
+
+      const ends = Math.round(warpWidth * epi);
+      const warpYdsPerEnd = ((warpLen + waste) * (1 + warpTakeup)) / 36;
+      const totalWarpYds = Math.ceil(ends * warpYdsPerEnd);
+
+      const weftYdsPerPick = (warpWidth * (1 + weftTakeup)) / 36;
+      const totalPicks = Math.round(ppi * wovenLen);
+      const totalWeftYds = Math.ceil(totalPicks * weftYdsPerPick);
+
+      const totalYds = totalWarpYds + totalWeftYds;
+      const totalLbs = totalYds / ypp;
+      const totalGrams = Math.ceil(totalLbs * 453.6);
+      const totalSkeins = Math.ceil(totalYds / skeinSize);
+
+      document.getElementById('yc_ends').textContent = ends.toLocaleString();
+      document.getElementById('yc_warpYds').textContent = totalWarpYds.toLocaleString() + ' yds';
+      document.getElementById('yc_weftYds').textContent = totalWeftYds.toLocaleString() + ' yds';
+      document.getElementById('yc_totalYds').textContent = totalYds.toLocaleString() + ' yds';
+      document.getElementById('yc_grams').textContent = totalGrams.toLocaleString() + ' g (' + totalLbs.toFixed(2) + ' lb)';
+      document.getElementById('yc_skeins').textContent = totalSkeins + ' × ' + skeinSize + ' yd';
+
+      // Per-colour breakdown
+      const bd = document.getElementById('yc_breakdown');
+      bd.innerHTML = '';
+      let totalCost = 0;
+      ycColors.forEach(col => {
+        const colWarpYds = Math.ceil(totalWarpYds * (col.warpPct / 100));
+        const colWeftYds = Math.ceil(totalWeftYds * (col.weftPct / 100));
+        const colYds = colWarpYds + colWeftYds;
+        const colSkeins = Math.ceil(colYds / skeinSize);
+        const colPrice = col.priceOverride !== '' ? parseFloat(col.priceOverride) : pricePerSkein;
+        const colCost = colSkeins * colPrice;
+        totalCost += colCost;
+        const row = document.createElement('div');
+        row.className = 'yc-breakdown-row';
+        row.innerHTML = `
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <div style="width:14px;height:14px;border-radius:3px;background:${col.color};border:1px solid rgba(0,0,0,0.15);flex-shrink:0;"></div>
+            <span style="font-size:12px;font-weight:700;color:var(--brand-blue);">${escHtml(col.name)}</span>
+            <span style="font-size:10px;color:var(--brand-blue);font-weight:700;margin-left:auto;">W:${col.warpPct}% · F:${col.weftPct}%</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;font-size:11px;">
+            <div><span style="color:var(--brand-blue);display:block;font-size:9px;font-weight:700;text-transform:uppercase;">Warp</span><b>${colWarpYds.toLocaleString()} yds</b></div>
+            <div><span style="color:var(--brand-blue);display:block;font-size:9px;font-weight:700;text-transform:uppercase;">Weft</span><b>${colWeftYds.toLocaleString()} yds</b></div>
+            <div><span style="color:var(--brand-blue);display:block;font-size:9px;font-weight:700;text-transform:uppercase;">Skeins</span><b>${colSkeins}</b></div>
+            <div><span style="color:var(--brand-blue);display:block;font-size:9px;font-weight:700;text-transform:uppercase;">Cost</span><b style="color:var(--brand-purple);">${ycGetSymbol()}${colCost.toFixed(2)}</b></div>
+          </div>`;
+        bd.appendChild(row);
+      });
+
+      document.getElementById('yc_totalCost').textContent = ycGetSymbol() + totalCost.toFixed(2);
+      document.getElementById('yc_costNote').textContent = totalSkeins + ' skein' + (totalSkeins !== 1 ? 's' : '') + ' total\n@ ' + ycGetSymbol() + pricePerSkein.toFixed(2) + ' avg/skein';
+
+      // Finished sizes
+      const finWidIn  = (warpWidth * (1 - weftTakeup)).toFixed(1);
+      const finLenIn  = (wovenLen  * (1 - shrinkage)).toFixed(1);
+      const finWidCm  = (finWidIn  * 2.54).toFixed(1);
+      const finLenCm  = (finLenIn  * 2.54).toFixed(1);
+      document.getElementById('yc_finishedSizes').innerHTML =
+        `<b>On-loom:</b> ${warpWidth}" wide × ${wovenLen}" long<br>
+         <b>After take-up:</b> ${finWidIn}" × ${wovenLen}" (${finWidCm} × ${(wovenLen*2.54).toFixed(1)} cm)<br>
+         <b>After washing/shrinkage:</b> <b style="color:var(--brand-blue);">${finWidIn}" × ${finLenIn}"</b> &nbsp;(${finWidCm} × ${finLenCm} cm)`;
+    }
+
+    function ycPrint() {
+      const el = document.getElementById('appVersion');
+      const ver = el ? el.textContent : '';
+      const date = new Date().toLocaleString();
+
+      // Build print content from current values
+      const rows = [
+        ['Warp Width', document.getElementById('yc_warpWidth').value + '"'],
+        ['EPI / Sett', document.getElementById('yc_epi').value],
+        ['Warp Length', document.getElementById('yc_warpLen').value + '"'],
+        ['PPI', document.getElementById('yc_ppi').value],
+        ['Woven Length', document.getElementById('yc_wovenLen').value + '"'],
+        ['Loom Waste', document.getElementById('yc_waste').value + '"'],
+        ['Warp Take-up', document.getElementById('yc_warpTakeup').value + '%'],
+        ['Weft Take-up', document.getElementById('yc_weftTakeup').value + '%'],
+        ['Yards per Pound', document.getElementById('yc_ypp').value],
+        ['Skein Size', document.getElementById('yc_skeinSize').value + ' yds'],
+        ['Price per Skein', ycGetSymbol() + document.getElementById('yc_pricePerSkein').value],
+        ['Shrinkage', document.getElementById('yc_shrinkage').value + '%'],
+      ];
+
+      const inputRows = rows.map(([k,v]) =>
+        `<tr><td style="color:var(--text-muted);padding:4px 8px;">${k}</td><td style="font-weight:700;padding:4px 8px;">${v}</td></tr>`
+      ).join('');
+
+      const stats = [
+        ['Total Ends',        document.getElementById('yc_ends').textContent],
+        ['Total Warp Yardage',document.getElementById('yc_warpYds').textContent],
+        ['Total Weft Yardage',document.getElementById('yc_weftYds').textContent],
+        ['Grand Total',       document.getElementById('yc_totalYds').textContent],
+        ['Total Weight',      document.getElementById('yc_grams').textContent],
+        ['Skeins Needed',     document.getElementById('yc_skeins').textContent],
+        ['Total Cost',        document.getElementById('yc_totalCost').textContent],
+      ];
+
+      const statRows = stats.map(([k,v]) =>
+        `<tr><td style="color:var(--text-muted);padding:4px 8px;">${k}</td><td style="font-weight:800;color:var(--brand-blue);padding:4px 8px;">${v}</td></tr>`
+      ).join('');
+
+      const bdHtml = document.getElementById('yc_breakdown').innerHTML;
+      const finHtml = document.getElementById('yc_finishedSizes').innerHTML;
+
+      const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Yarn Estimate</title>
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;800&display=swap" rel="stylesheet">
+        <style>
+          body{font-family:'Raleway',sans-serif;font-size:13px;color:var(--text);padding:32px;max-width:700px;margin:0 auto;}
+          h1{color:var(--brand-blue);margin-bottom:4px;} h2{color:var(--brand-purple);font-size:13px;text-transform:uppercase;letter-spacing:0.08em;border-bottom:2px solid var(--btn-bg);padding-bottom:6px;margin:20px 0 10px;}
+          table{border-collapse:collapse;width:100%;} td{border-bottom:1px solid var(--bg);}
+          .bd{border:1px solid var(--shaft-bg);padding:8px 12px;border-radius:6px;margin-bottom:8px;}
+          @media print{body{padding:16px;}}
+        </style>
+      </head><body>
+        <h1>🧶 Yarn Estimate</h1>
+        <p style="color:var(--text-faint);font-size:11px;">Printed ${date} · WeaversCanvas ${ver}</p>
+        <h2>Project Inputs</h2><table>${inputRows}</table>
+        <h2>Results</h2><table>${statRows}</table>
+        <h2>Per-Colour Breakdown</h2>${bdHtml}
+        <h2>Finished Dimensions</h2><p>${finHtml}</p>
+      </body></html>`;
+
+      const win = window.open('', '_blank');
+      if (!win) {
+        // Popup blocked — fallback to blob URL
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.target = '_blank'; a.click();
+        setTimeout(() => URL.revokeObjectURL(url), 5000);
+        return;
+      }
+      win.document.write(html);
+      win.document.close();
+      win.focus();
+      setTimeout(() => { try { win.print(); } catch(e) {} }, 500);
+    }
+    const SA_PRESETS = [
+        { label:'Rya / Rug wool (6)', wpi:6 },
+        { label:'Bulky (8)', wpi:8 },
+        { label:'Aran (10)', wpi:10 },
+        { label:'Worsted (12)', wpi:12 },
+        { label:'DK (16)', wpi:16 },
+        { label:'Sport (22)', wpi:22 },
+        { label:'Fingering (28)', wpi:28 },
+        { label:'Laceweight (40)', wpi:40 },
+        { label:'10/2 Cotton (60)', wpi:60 },
+        { label:'20/2 Cotton (80)', wpi:80 },
+    ];
+
+    // Structure multipliers — fraction of WPI for a balanced sett
+    const SA_STRUCT = {
+        plain:      { bal:0.50, note:'Plain weave: half of WPI gives a balanced cloth where warp and weft show equally. This is the classic rule — WPI ÷ 2.' },
+        twill:      { bal:0.60, note:'2/2 Twill: sett at ~60% of WPI. Twill floats allow threads to pack more tightly than plain weave — you can sett a bit closer and get a fuller, drapier cloth.' },
+        twill13:    { bal:0.65, note:'1/3 or 3/1 Twill: the longer floats on one face mean threads pack even more closely — 65% of WPI. Watch your floats at the selvedge.' },
+        basket:     { bal:0.45, note:'Basket weave: the paired threads need extra room to turn at the edges. Sett a little looser than plain weave, around 45% of WPI.' },
+        lace:       { bal:0.35, note:'Lace structures: you want open space between threads so the lace holes are visible. 30–40% of WPI gives that airy quality. Too close and the openwork disappears.' },
+        warpfaced:  { bal:1.00, note:'Warp-faced cloth (inkle bands, card weaving, Navajo rugs): the warp completely covers the weft. You need 100% WPI or more — pack the warp threads so the weft cannot be seen from the front.' },
+        weftfaced:  { bal:0.20, note:'Weft-faced cloth (tapestry, kilim, Scandinavian rölakan): weft completely covers the warp. Sett the warp loosely — only 15–25% of WPI — so the weft can fully pack down over it.' },
+        doubleweave:{ bal:0.55, note:'Double weave: you are weaving two layers simultaneously so the effective sett per layer is half the total. Sett at 55% of WPI for the combined layers — slightly more than plain weave.' },
+        huck:       { bal:0.45, note:"Huck lace and M's & O's: these structures need threads loose enough to form the characteristic floats that create the open squares. 40–50% of WPI gives the right openness without the cloth falling apart." },
+    };
+
+    let _sa_balEPI = 18;
+
+// ════════════════════════════════════════════════════════════════════════════
+// SETT ADVISOR — recommended EPI
+// ════════════════════════════════════════════════════════════════════════════
+    function openSettAdvisor() {
+        document.getElementById('settAdvisorModal').style.display = 'flex';
+        // Initialise the detail line from the currently selected option
+        const sel = document.getElementById('sa_presets');
+        const opt = sel.options[sel.selectedIndex];
+        document.getElementById('sa_presetDetail').textContent = opt ? (opt.getAttribute('data-detail') || '') : '';
+        settCalc();
+    }
+
+    function closeSettAdvisor() {
+        document.getElementById('settAdvisorModal').style.display = 'none';
+    }
+
+    function settSetWPI(v) {
+        document.getElementById('sa_wpi').value = v;
+        settCalc();
+    }
+
+    function settApplyPreset(sel) {
+        const v = parseInt(sel.value);
+        if (!isNaN(v)) {
+            document.getElementById('sa_wpi').value = v;
+        }
+        const opt = sel.options[sel.selectedIndex];
+        document.getElementById('sa_presetDetail').textContent = opt ? (opt.getAttribute('data-detail') || '') : '';
+        settCalc();
+    }
+
+    function settCalc() {
+        const wpi = parseInt(document.getElementById('sa_wpi').value) || 18;
+        const struct = document.getElementById('sa_structure').value;
+        const sd = SA_STRUCT[struct] || SA_STRUCT.plain;
+
+        const bal  = Math.round(wpi * sd.bal);
+        const wf   = Math.round(wpi * 1.0);   // warp-faced always ~WPI
+        const weft = Math.round(wpi * 0.20);  // weft-faced always loose
+
+        _sa_balEPI = bal;
+
+        document.getElementById('sa_bal_val').textContent  = bal;
+        document.getElementById('sa_wf_val').textContent   = wf;
+        document.getElementById('sa_weftf_val').textContent = weft;
+        document.getElementById('sa_note').textContent     = sd.note;
+        document.getElementById('sa_range').textContent    =
+            `Safe range for balanced cloth: ${Math.round(bal * 0.85)}–${Math.round(bal * 1.15)} EPI  ·  Your yarn WPI: ${wpi}`;
+        document.getElementById('sa_apply_label').textContent =
+            `Will set EPI to ${bal} in Yarn Calc`;
+    }
+
+    function settApplyBalanced(e) {
+        // Apply to Yarn Calc EPI
+        const epiEl = document.getElementById('yc_epi');
+        if (epiEl) { epiEl.value = _sa_balEPI; if (typeof ycCalc === 'function') ycCalc(); }
+        // Flash confirm
+        const btn = (e && e.target) ? e.target : document.querySelector('[onclick*="settApplyBalanced"]');
+        const orig = btn ? btn.textContent : '';
+        btn.textContent = 'Applied!';
+        btn.classList.add('is-on');
+        setTimeout(() => { if (btn) { btn.textContent = orig; btn.classList.remove('is-on'); } }, 1500);
+        closeSettAdvisor();
+        openYarnCalc();
+    }
+// ═══════════════════════════════════════════════════════════════════════════════
+const YL_COLORS = {
+  Cotton:'#f5e9d7', Wool:'#d4c5a9', Silk:'#f0e8da', Linen:'#e8d9b8',
+  Rayon:'#d4dde6', Tencel:'#cdd9d0', Bamboo:'#d8e3c4', Hemp:'#b5b88c',
+  Soy:'#e3d8b8', Pineapple:'#c2b682', Plant:'#a89878', Metallic:'#c9c5b8',
+  Blend:'#bfb8a8', Mohair:'#e0d4be', Cashmere:'#e8dcc8', Alpaca:'#c9b8a0'
+};
+const YL_FAMILIES = [
+  { id:'all',     label:'All Yarns' },
+  { id:'Cotton',  label:'Cotton' },
+  { id:'Wool',    label:'Wool, Alpaca, Mohair' },
+  { id:'Silk',    label:'Silk' },
+  { id:'Linen',   label:'Linen' },
+  { id:'Rayon',   label:'Rayon / Viscose' },
+  { id:'Tencel',  label:'Tencel' },
+  { id:'Bamboo',  label:'Bamboo & Soy' },
+  { id:'Hemp',    label:'Hemp, Pineapple, Plant' },
+  { id:'Metallic',label:'Metallic & Wire' },
+  { id:'Blend',   label:'Blends & Novelties' }
+];
+const YL_YARNS = [
+// COTTON (page 1)
+['Cotton','Size 60 sewing thread',24000,48340,36,48,60],
+['Cotton','40/2 pearl cotton',16800,33900,36,48,60],
+['Cotton','50/3 sewing thread',14000,28250,36,48,60],
+['Cotton','30/2 unmercerized cotton',11055,22300,30,45,54],
+['Cotton','20/2 pearl cotton',8400,16950,30,36,48],
+['Cotton','20/2 unmercerized cotton',8400,16950,30,36,48],
+['Cotton','80% cotton, 20% silk (Lace Yarn)',8100,16344,30,36,48,'425 yds/skein'],
+['Cotton','2-ply organic unmercerized cotton (Ecosett)',7000,14120,30,32,40],
+['Cotton','16/2 pearl cotton',6720,13560,24,30,36],
+['Cotton','16/2 unmercerized cotton',6720,13560,24,30,36],
+['Cotton','14/2 cotton',5880,11865,24,28,32],
+['Cotton','12/2 pearl cotton',5040,10170,20,24,30],
+['Cotton','100% cotton (Gima)',4240,8555,15,20,24],
+['Cotton','10/2 pearl cotton',4200,8475,20,24,28],
+['Cotton','10/2 unmercerized cotton',4200,8470,20,24,28],
+['Cotton','Embroidery floss (Caron Wildflower)',4000,8060,20,24,28],
+['Cotton','3-ply size 20 crochet cotton',3800,7650,16,20,24],
+['Cotton','Cotton slub',3750,7520,18,20,24],
+['Cotton','8/2 pearl cotton',3360,6775,16,20,24],
+['Cotton','8/2 unmercerized cotton',3360,6775,16,20,24],
+['Cotton','8/2 cottlin (50/50 or 60/40 cotton/linen)',3360,6775,15,20,24],
+['Cotton','22/2 cottlin (50% cotton, 50% linen)',3170,6390,15,20,24],
+['Cotton','3-ply #10 crochet cotton',3050,6155,16,20,24],
+['Cotton','6/2 unmercerized cotton',2520,5080,14,18,24],
+['Cotton','5/2 pearl cotton',2100,4238,12,16,18],
+['Cotton','5/2 unmercerized cotton',2100,4238,12,16,18],
+['Cotton','DMC Perle Cotton #5 (2-ply)',2100,4238,12,16,18],
+['Cotton','6-strand cotton embroidery floss',2100,4238,12,16,18],
+['Cotton','80% cotton, 20% wool (Cotton Fine)',2000,4040,12,15,20],
+['Cotton','Cotton novelty (Casco Bay)',2000,4035,null,null,null],
+['Cotton','8/4 cotton carpet warp',1680,3390,10,15,18],
+['Cotton','8/4 soft-twist cotton',1680,3390,10,15,18],
+['Cotton','8/4 pearl cotton',1680,3390,10,15,18],
+['Cotton','4/2 unmercerized cotton',1680,3390,10,15,18],
+['Cotton','Cotton novelty (Snowflake)',1500,3025,10,14,18],
+['Cotton','Cotton chenille',1450,2926,12,15,18],
+['Cotton','12/6 cotton',1430,2925,10,14,16],
+['Cotton','100% organic cotton (Pakucho)',1375,2775,10,12,15],
+['Cotton','Cotton flake (Noho)',1320,2665,10,14,16],
+['Cotton','3/2 pearl cotton',1260,2442,10,14,16],
+['Cotton','3/2 organic cotton',1260,2442,10,14,16],
+['Cotton','6/2/2 cotton',1260,2620,10,12,15],
+['Cotton','Cotton novelty (Truffles)',1200,2420,null,null,null],
+['Cotton','DK-weight cotton (Yeoman)',1186,2390,10,12,15],
+['Cotton','2-ply combed cotton (Monte Cristo II)',1150,2320,10,12,14],
+['Cotton','10-ply cotton (Enzo Lucci)',1140,2298,10,12,14],
+['Cotton','Cabled cotton',1116,2252,10,12,14],
+['Cotton','Z-twist 4-ply cotton cord',1050,2120,8,10,12],
+// COTTON (page 2 cont.)
+['Cotton','12-strand Egyptian cotton',1040,2100,10,12,14],
+['Cotton','8-ply cotton (Nashua Natural Focus Ecologie)',1005,110,6,8,10,'110 yd/50 g'],
+['Cotton','Cotton bouclé',1000,2010,10,12,15],
+['Cotton','10-ply cotton (Tahki)',980,1980,6,8,10],
+['Cotton','Novelty cotton (Cathy)',950,1920,6,8,10],
+['Cotton','12/9 cotton seine twine',925,1865,6,8,10],
+['Cotton','Novelty cotton (Serenity)',918,1852,6,8,10],
+['Cotton','Cotton chenille',890,1796,6,8,10],
+['Cotton','Worsted-weight cotton',850,1715,6,8,10],
+['Cotton','8/8 unmercerized cotton',840,1695,6,8,10],
+['Cotton','4-ply (4/4) cotton',840,1695,6,8,10],
+['Cotton','Cabled cotton',839,1693,6,8,10],
+['Cotton','75% recycled cotton, 25% acrylic',825,1664,null,null,null],
+['Cotton','4/4 cotton',800,1615,4,6,8],
+['Cotton','Worsted-weight cotton',755,1520,6,8,10],
+['Cotton','3/16" piping cord',null,null,null,null,null,'Trim/edge use'],
+['Cotton','10-ply cotton (Sand Cotton)',700,1412,4,6,8],
+['Cotton','8/8/2 mop cotton',420,846,4,6,8],
+['Cotton','8-ply (8/16) mop cotton',420,848,null,null,null],
+['Cotton','4/8 cotton (Repp Filler)',384,775,4,6,8],
+['Cotton','4-ply cotton cord',260,525,null,null,null],
+['Cotton','Cotton string yarn (Midi)',244,495,null,null,null],
+['Cotton','4-ply mop cotton',170,340,null,null,null],
+['Cotton','3-ply cotton rug filler',150,302,null,null,null],
+['Cotton','Cotton string yarn (Maxi)',123,250,null,null,null],
+['Cotton','8-ply mop cotton',85,170,null,null,null],
+// WOOL (pages 2-4)
+['Wool','Wool crepe (overtwist)',15040,30350,null,null,null],
+['Wool','Z-twist wool crepe (overtwist)',12000,24216,null,null,null],
+['Wool','48/2 wool',11840,23875,30,40,60],
+['Wool','2-ply overtwisted merino wool',9000,18160,24,30,36,'56/2 TEX'],
+['Wool','36/2 wool',8950,18025,24,36,45],
+['Wool','28/2 wool',6880,13885,24,36,45],
+['Wool','2-ply wool',6464,13000,24,28,36],
+['Wool','24/2 wool',5960,12005,20,24,30],
+['Wool','20/2 wool',5600,11300,20,24,30],
+['Wool','50% wool, 50% silk',5400,10890,20,25,30],
+['Wool','18/2 merino wool',5040,10170,20,24,30],
+['Wool','18/2 wool/silk',5040,10170,20,24,30],
+['Wool','2-ply merino wool',4800,9685,16,20,24],
+['Wool','2-ply wool (Mora)',4700,9467,16,20,24],
+['Wool','50% alpaca, 50% Tencel',4200,8475,20,24,28],
+['Wool','60% alpaca, 40% cotton (Serena)',4200,8475,20,24,28],
+['Wool','70% kid mohair, 30% silk (Kid Seta)',4181,8445,20,24,28],
+['Wool','70% alpaca, 30% silk',4169,8420,20,24,28],
+['Cashmere','2-ply cashmere (Still River Mill)',3657,7330,12,15,18],
+['Wool','Singles wool (Pendleton)',3600,7265,16,20,24],
+['Cashmere','45% cashmere, 55% silk',3320,6700,15,18,24],
+['Wool','Singles wool (Färö)',3100,6244,15,18,20],
+['Wool','2-ply angora',3000,6042,15,18,20],
+['Alpaca','2-ply laceweight alpaca',2800,5650,12,16,20],
+['Wool','80% alpaca, 20% bamboo (Forever Lace)',3000,6042,15,18,20],
+['Blend','52% bamboo, 43% superwash merino, 5% silk',3000,null,12,15,18],
+['Wool','Wool roving',2976,6000,12,15,20],
+['Wool','100% wool (Nature Spun Fingering)',2840,5505,12,16,20],
+['Wool','2-ply fingering-weight wool',2800,5650,15,18,20],
+['Wool','3-ply fingering-weight wool',2800,5650,15,18,20],
+['Wool','10/2 merino/Tencel (Colrain Lace)',2800,5645,15,18,20],
+['Alpaca','Handspun doubled alpaca',2600,5212,12,15,20],
+['Wool','3-ply organic merino',2600,5040,12,16,20],
+['Wool','3-ply fingering-weight wool',2560,5160,10,12,15],
+['Wool','Wool crepe (Silk City Deluxe)',2250,4505,10,12,15],
+['Wool','Singles wool',2240,4490,12,15,20],
+['Wool','8/2 wool',2240,4520,12,15,20],
+['Wool','12/3 worsted wool',2160,4350,12,15,20],
+['Wool','65% wool, 35% camel down',2100,4238,12,15,20],
+['Wool','2-ply wool (Peruvian Highland)',2112,4234,18,20,24],
+['Wool','70% wool, 30% nylon singles (Noro Kureyon Sock Yarn)',2066,4170,16,20,24],
+['Wool','Fingering-weight superwash wool (Fortissima)',2060,4160,12,15,20],
+['Alpaca','11/3 alpaca',2053,4140,10,12,15],
+['Wool','2-ply wool',1988,4020,16,20,24],
+['Wool','7/2 wool (Bockens, Borgs, or Klippans)',1960,4210,12,15,20],
+['Alpaca','2-ply fingering-weight alpaca',1920,3860,16,20,24],
+['Wool','2-ply wool (Harrisville Shetland)',1800,3630,12,15,20],
+['Wool','2-ply Hebridean wool',1800,3630,12,15,20],
+['Wool','45% wool, 35% silk, 20% nylon (Silky Wool)',1750,3530,10,12,15],
+['Wool','65% merino, 30% silk, 5% nylon',1750,3532,10,12,16],
+['Wool','7/2 wool',1735,3500,10,12,15],
+['Wool','90% superwash merino, 10% nylon sock yarn',1635,3280,10,15,20],
+['Wool','Merino bouclé',1635,3296,10,12,15],
+['Wool','Wool singles',1600,3210,10,12,15],
+['Wool','6/2 wool',1600,3225,8,10,12],
+['Wool','70% alpaca, 30% soysilk',1600,3225,8,10,12],
+['Wool','2-ply sport-weight wool (Imperial)',1580,3185,8,10,12],
+['Wool','2-ply 100% wool (Rauma Prydvevgarn)',1497,3020,8,10,12],
+['Wool',"2-ply fingering-weight wool (Maggie's farm)",1500,3024,10,12,15],
+['Wool','2-ply wool',1488,3000,10,12,15],
+['Wool','2-ply wool (50% spelsau, 50% luster)',1488,3000,10,12,15],
+['Wool','2-ply wool',1475,2950,10,12,15],
+['Wool','4-ply wool (Montana)',1120,2260,6,8,10],
+['Wool','2-ply sport-weight wool (Meridian Jacobs)',1390,2802,6,8,10],
+['Alpaca','3-ply alpaca',1330,2680,8,10,12],
+['Wool','50% alpaca, 50% wool',1315,2654,6,8,10],
+['Alpaca','4-ply alpaca',1300,2625,8,10,12],
+['Wool','9/4 worsted wool',1260,2542,10,12,15],
+['Wool','3-ply wool (Limbo)',1234,2490,10,12,15],
+['Alpaca','2-ply alpaca (North Brook Farm)',1225,2455,10,12,15],
+['Alpaca','3-ply alpaca',1190,2399,10,12,15],
+['Alpaca','Sport-weight alpaca',1179,2377,10,12,15],
+['Alpaca','3-ply alpaca (North Brook Farm)',1175,2355,10,12,15],
+['Wool','Wool bouclé (Victorian, Halcyon Yarn)',1175,2370,6,8,10],
+['Blend','47% rayon, 25% linen, 17% silk (Seducer)',1150,2320,10,15,20],
+['Wool','8/4 wool/silk',1120,2258,10,12,15],
+['Wool','100% wool (Nature Spun Worsted)',1120,2170,6,8,10],
+['Wool','3-ply merino wool',1120,2260,8,10,12],
+['Wool','Navajo Wool Warp',1120,2260,6,8,10],
+['Wool','Handspun 2-ply wool',1025,2066,10,12,15],
+['Wool','2-ply wool (Cascade 220)',1006,2060,10,12,15],
+['Wool','2-ply wool',1100,2240,6,8,10],
+['Wool','2-ply wool',1090,2200,10,12,15],
+['Wool','2-ply woolen-spun wool (Crown Colony)',1040,2100,10,12,15],
+['Wool','3-ply merino wool (Gems Opal, Louet)',1028,2070,8,10,12],
+['Wool','50% alpaca, 50% soy',1000,416,10,12,15],
+['Alpaca','4-ply alpaca',1000,2018,8,10,12],
+['Wool','2-ply rug yarn (80% wool, 20% cotton, by Jason Collingwood)',1000,2010,6,8,10],
+['Wool','Merino wool singles (Loft)',990,1995,4,6,8],
+['Wool','Merino bouclé',980,1975,null,null,null],
+['Wool','4-ply 100% wool (Telemark)',941,null,6,8,10,'103 yd/50 g ball'],
+['Blend','2-ply 50% buffalo, 50% alpaca (Lonesome Stone Natural Fiber Mill)',900,1804,6,8,10],
+['Wool','2-ply wool (Harrisville Highland)',900,1816,6,8,10],
+['Mohair','Mohair',900,1816,8,10,12],
+['Wool','2-ply worsted wool',880,1774,6,8,10],
+['Wool','4-ply wool rug warp',868,1752,4,8,10],
+['Wool','3-ply wool',841,1698,4,8,10],
+['Mohair',"70% mohair, 30% wool (Lamb's Pride Handpaint Originals)",804,1620,6,8,10],
+['Wool','2-ply wool (Bartlettyarns Maine Wool)',800,1605,6,8,10],
+['Wool','4-ply sock yarn (75% wool, 25% nylon)',800,null,null,null,null],
+['Mohair',"85% wool, 15% mohair (Lamb's Pride Worsted)",760,1535,6,8,10],
+['Wool','3-ply wool (Rugby, Wilde Yarns)',720,1450,6,8,10],
+['Wool','4-ply wool (Lincoln Longwool)',700,1752,4,8,10],
+['Wool','Persian rug wool (Paternayan)',672,1356,4,6,8],
+['Wool','Tapestry Wool (DMC)',650,1314,6,8,10],
+['Wool','Wool singles (Manos del Uruguay)',630,1270,6,8,10],
+['Wool','85% wool, 15% alpaca singles (Berkshire)',643,1300,4,6,8],
+['Wool','Wool singles (Wool Classica)',631,1300,8,10,12],
+['Wool','2-ply worsted-weight karakul',600,1210,6,8,10],
+['Wool','3-ply rug wool',578,1160,6,8,10],
+['Mohair',"85% wool, 15% mohair (Lamb's Pride Bulky)",570,1150,4,6,8],
+['Wool','2/2/2 rug wool',550,1110,8,10,12],
+['Wool','Wool singles (Iceland)',495,998,4,6,8],
+['Wool','2-ply rug wool',480,970,null,null,null],
+['Wool','Wool singles (Geo, Halcyon)',470,948,null,null,null],
+['Wool','3-ply rug wool (Deco)',460,926,4,6,8],
+['Wool','100% wool (Nature Spun Chunky)',354,686,4,6,8],
+['Wool','16-strand merino (Chunky Merino)',450,872,4,6,8],
+['Wool','3-ply wool rug yarn',260,525,2,4,6],
+['Wool','18/3 rug wool',330,665,null,null,null],
+['Wool','Merino wool (Tahki Baby Yarn)',274,552,2,4,6],
+['Wool','3-ply rug wool',260,525,null,null,null],
+['Wool','Wool/alpaca blend (Blue Sky Bulky)',205,null,null,null,null,'45 yd/100 g'],
+['Wool','95% wool, 5% acrylic (Circus, Artful Yarns)',null,null,null,null,null,'93 yd/100 g'],
+// SILK and SILK BLENDS (pages 4-5)
+['Silk','140/2 silk',35000,70630,56,72,90],
+['Silk','Undegummed silk',15000,30270,40,45,60],
+['Silk','60/2 silk',14880,30028,40,45,60],
+['Silk','3-ply silk',14400,29059,40,45,60],
+['Silk','Silk elastic (use with other warp yarns only)',13600,27445,null,null,null],
+['Silk','4-strand unspun silk',10000,20180,null,null,null],
+['Silk','20/1 silk (70% silk, stainless steel core)',9600,18600,12,24,40],
+['Silk','140/2/4 silk',7950,16050,24,32,40],
+['Silk','30/2 silk',7850,15840,24,32,40],
+['Silk','30/2 muga (wild) silk',6800,13720,24,32,40],
+['Silk','12/2 silk (Gemstone)',2800,5650,12,16,18],
+['Silk','Tussah silk (Honeyspun)',2000,4040,12,16,18],
+['Silk','#73 fine silk cord',7850,15840,24,32,40],
+['Silk','60/2 silk',15000,30028,40,50,60],
+['Silk','30/2 silk frisé bouclé',7440,15010,24,32,40],
+['Silk','70% silk, 30% Seacell (Sea Silk)',7440,15010,24,32,40],
+['Silk','120/8 tussah silk',6100,12225,24,30,36],
+['Silk','50% wool, 50% silk',5400,10890,20,25,30],
+['Silk','18/2 wool/silk',5040,10170,22,26,30],
+['Silk','20/2 spun silk',5000,10100,22,26,30],
+['Silk','Uneven spun silk',4960,10000,22,26,30],
+['Silk','20/2 silk',4900,9880,22,26,30],
+['Silk','10/1 silk noil',4800,9686,22,26,30],
+['Silk','#6 fine silk cord',4650,9380,22,26,30],
+['Silk','20/2 noil bombyx silk',4500,9020,22,26,30],
+['Silk','70% kid mohair, 30% silk (Kid Seta)',4181,8445,20,24,28],
+['Silk','70% alpaca, 30% silk',4169,8420,20,24,28],
+['Silk','15/2 tussah silk',3759,7600,18,20,22],
+['Silk','8-strand silk cord',3750,7565,18,20,22],
+['Silk','45% cashmere, 55% silk',3320,6700,15,18,24],
+['Silk','Fine silk cord',3100,6250,15,18,20],
+['Silk','6/1 mawata silk novelty',2960,5967,10,12,15],
+['Silk','4-ply 75% rayon, 25% silk (Splash)',2800,5650,15,20,24],
+['Silk','100% silk floss (Alec Jackson Premium Japanese Silk Floss)',null,null,null,null,null],
+['Silk','Silk frisé eyelash',2970,6000,null,null,null],
+['Silk','12/2 spun silk',2900,5850,15,18,20],
+['Silk','8/2 silk',2800,5650,14,18,22],
+['Silk','2-ply silk cord',2800,5650,14,18,22],
+['Silk','2-ply silk noil',2700,5450,12,15,18],
+['Silk','Viscose Sizing Fancy Silk',2480,5000,12,15,18],
+['Silk','2-ply Cascade silk',2000,4040,12,16,18],
+['Silk','5/2 silk',1188,2390,30,32,34],
+['Silk','45% wool, 35% silk, 20% nylon (Silky Wool)',1750,3530,10,12,15],
+['Silk','65% merino, 30% silk, 5% nylon',1750,3532,10,12,16],
+['Silk','Silk bouclé (Tiara)',1450,2923,10,12,16],
+['Silk','70% merino, 30% silk (Silk Blend)',1370,2780,null,null,null],
+['Silk','10-strand silk embroidery floss (Soie Cristale, Caron)',1200,2419,null,null,null],
+['Silk','8/4 wool/silk',1120,2258,10,12,15],
+['Silk','12-ply silk',1100,2220,10,14,18],
+['Silk','Recycled silk (Mango Moon)',400,782,null,null,null],
+['Silk','Recycled silk',270,544,null,null,null],
+['Silk','Recycled silk knitting yarn (Himalaya)',null,null,null,null,null,'80 yd (74 m)/hank'],
+['Silk','10-strand silk embroidery floss (Waterlilies, Caron)',null,null,null,null,null],
+['Silk','Sari silk ribbon',null,null,null,null,null],
+// LINEN (pages 5-6)
+['Linen','50/1 linen',15000,30270,30,40,48],
+['Linen','2-ply line linen (Linen 14)',7000,14030,24,30,36],
+['Linen','48/2 line linen',7000,14130,30,32,36],
+['Linen','40/2 linen',6000,12108,24,30,36],
+['Linen','12/2 cot/lin (70% cotton, 30% linen)',5040,10170,20,24,30],
+['Linen','16/1 linen',4800,9686,20,24,28],
+['Linen','35/2 Linen',4600,9282,20,24,28],
+['Linen','30/2 linen',4500,9075,20,24,28],
+['Linen','28/2 linen',4200,8475,20,24,28],
+['Linen','8/2 cottlin (50/50 or 60/40 cotton/linen)',3360,1397,15,20,24],
+['Linen','22/2 cottlin (50/50 or 60/40 cotton/linen)',3170,6390,15,20,24,'3,170-3,300 yd/lb'],
+['Linen','12/1 linen',3300,1372,15,20,24],
+['Linen','20/2 linen',3000,6050,15,20,24],
+['Linen','16/2 linen',2400,4840,15,20,24],
+['Linen','14/2 linen',2450,4750,14,18,22],
+['Linen','49% linen, 35% kid mohair, 16% nylon (KidLin)',2270,4550,10,12,18],
+['Linen','5-ply linen (Texere)',2250,null,null,null,null],
+['Linen','Singles tow linen',2064,4150,12,16,20],
+['Linen','48/2/4 line linen',1750,3530,12,16,20],
+['Linen','10/2 wet-spun linen',1600,3228,12,15,18],
+['Linen','10/2 linen',1500,3025,12,15,18],
+['Linen','30% linen, 70% organic cotton (Allegoro)',1400,2825,10,12,15],
+['Linen','4-ply linen (Euroflax)',1300,2625,10,14,18],
+['Linen','8/2 linen',1200,2420,10,14,16],
+['Linen','16/4 linen',1200,2420,10,14,18],
+['Linen','4-ply wet-spun linen',1200,2420,10,14,18],
+['Linen','8/3 linen',800,1614,8,10,12],
+['Linen','10/5 linen',600,1210,8,10,12],
+['Linen','8/4 wet-spun linen',600,1210,8,10,12],
+['Linen','8/5 linen',480,968,6,8,10],
+['Linen','8/6 wet-spun linen',400,810,6,8,10],
+// RAYON (page 5-6)
+['Rayon','Machine embroidery thread',22000,44400,null,null,null],
+['Rayon','#40 rayon sewing thread',13000,26234,40,45,60],
+['Rayon','100% viscose (Makeup)',13600,27445,36,48,60],
+['Rayon','64% viscose, 36% Elite (Jump)',10000,20180,null,null,null],
+['Rayon','Rayon metallic',6300,13104,24,28,32],
+['Rayon','Viscose sizing paper',4480,9040,null,null,null],
+['Rayon','Rayon flake',3700,7463,20,24,28],
+['Rayon','8/2 rayon flake',3360,6780,16,20,24],
+['Rayon','4-ply 75% rayon, 25% silk (Splash)',2800,5650,15,20,24],
+['Rayon','6-ply rayon',2500,5045,12,16,20],
+['Rayon','100% viscose (Marbella)',2325,4690,12,16,20],
+['Rayon','100% rayon (Susi)',2300,4640,12,15,18],
+['Rayon','Rayon novelty',2300,4640,12,15,18],
+['Rayon','100% Viscose (Calais)',4600,9280,22,26,30],
+['Rayon','100% viscose (Skinny Majesty)',2300,4645,12,15,18],
+['Rayon','100% textured viscose (Raffia)',2100,4234,10,12,15],
+['Rayon','6-strand rayon floss',2100,4238,8,10,12],
+['Rayon','Rayon bouclé',2100,4234,10,12,15],
+['Rayon','4-ply rayon',2100,4238,12,15,18],
+['Rayon','80% rayon, 20% metallized polyester',1980,3525,null,null,null],
+['Rayon','Rayon Slub',1600,3228,12,16,18],
+['Rayon','Lurex/rayon metallic (Chainette)',1900,3385,12,15,18],
+['Rayon','1.8/1 rayon slub',1680,3390,12,16,18],
+['Rayon','100% viscose (Slinky)',1600,3225,12,15,18],
+['Rayon','Rayon chenille',1450,2926,12,15,18],
+['Rayon','Rayon chenille',1300,2620,12,15,18],
+['Rayon','100% rayon (Rayon Ric Rac)',1200,2420,10,15,20],
+['Rayon','100% rayon metallic',1100,2220,10,15,20],
+['Rayon','46% viscose, 34% polyamide, 20% linen (Merletto)',888,1790,10,12,15],
+['Rayon','Rayon Ric Rac ribbon',1000,null,null,null,null],
+['Rayon','Rayon chenille (Chinchilla)',700,1330,8,10,12],
+['Rayon','100% rayon knitting ribbon (Glacé, Berocco)',685,1385,null,null,null],
+['Rayon','Colinette Giotto ribbon',600,null,null,null,null],
+['Rayon','Heavy Rayon Chenille',475,960,6,8,10],
+// TENCEL (page 6)
+['Tencel','30/2 Tencel',12600,25425,30,40,48],
+['Tencel','20/2 Tencel',8400,16950,30,36,48],
+['Tencel','18/2 Tencel',7560,15250,28,32,40],
+['Tencel','50% alpaca, 50% Tencel',4200,8475,20,24,28],
+['Tencel','10/2 Tencel',4200,8475,20,24,28],
+['Tencel','60% Tencel, 40% cotton',4200,8475,20,24,28],
+['Tencel','8/2 Tencel',3360,6780,16,20,24],
+['Tencel','10/2 merino/Tencel (Colrain Lace)',2800,5645,15,18,20],
+['Tencel','5/2 Tencel',2100,4238,12,16,18],
+// SOY, BAMBOO, etc. (page 6)
+['Soy','16/2 soy yarn (Soysilk)',6400,12895,20,24,36],
+['Bamboo','100% bamboo (Bambu 12)',6300,12690,20,30,36],
+['Bamboo','20/3 bamboo',5408,10913,20,24,28],
+['Soy','10/2 soy yarn (Soysilk)',4300,8660,20,24,28],
+['Bamboo','10/2 bamboo',4200,8475,20,24,28],
+['Bamboo','8/2 bamboo',3360,6780,16,20,24],
+['Bamboo','80% alpaca, 20% bamboo (Forever Lace)',3000,6042,15,18,20],
+['Bamboo','52% bamboo, 43% Superwash merino, 5% silk',3000,null,12,15,18],
+['Bamboo','100% bamboo',2500,5010,15,18,24],
+['Bamboo','100% bamboo (Bambu 7)',2100,4210,12,15,18],
+['Hemp','100% hemp',1600,3225,12,15,18],
+['Bamboo','Satin bamboo',1050,2120,10,12,14],
+['Hemp','2-ply hemp (Lunatic Fringe)',4000,8071,20,24,28],
+['Bamboo','100% bamboo tape',1344,null,null,null,null],
+['Bamboo','100% bamboo (Cleckheaton)',1240,2500,10,12,14],
+['Bamboo','100% bamboo tubular yarn',1150,2318,10,12,15],
+['Soy','Soy fiber tubular yarn (Soysilk)',1097,2210,8,10,12],
+['Blend','50% Superwash wool, 25% Soysilk, 22½% cotton, 2½% chitin (TOFUtsies)',2120,4110,10,14,16],
+['Pineapple','Pineapple singles (Fique)',1300,2625,null,null,null],
+['Bamboo','Bambo Lace (92% bamboo, 8% nylon)',650,1301,10,12,15],
+// BLENDS and OTHER MISCELLANEOUS (page 7)
+['Blend','Machine embroidery thread (59% polyester, 40% polyethylene, 1% metallic)',null,null,null,null,null],
+['Blend','Nylon upholstery thread',null,null,null,null,null,'150 yd (138 m)/spool'],
+['Blend','100% polyester serger thread',15000,30240,36,48,60],
+['Blend','Nymo nylon filament, size B',null,null,null,null,null],
+['Blend','Nymo waxed nylon beading thread, size D',null,null,null,null,null],
+['Blend','20/1 69% silk, 31% stainless',9840,19857,30,40,48],
+['Blend','Conductive thread (Numen Trace)',null,null,null,null,null],
+['Metallic','Single-strand metallic thread',8000,16140,null,null,null],
+['Metallic','30-gauge silver wire',null,null,24,30,36],
+['Metallic','30-gauge coated copper wire',null,null,null,null,null],
+['Metallic','28-gauge copper wire',null,null,18,24,30],
+['Metallic','EL Wire; 1.2 mm (Angel Hair)',null,null,null,null,null],
+['Blend','Cotton/polyester sewing thread',6000,12480,null,null,null],
+['Blend','Cotton/polyester sewing thread',4700,9485,null,null,null],
+['Blend','80% cotton, 20% merino wool',975,1965,6,8,10],
+['Blend','50% wool, 50% cotton',644,1225,4,6,8],
+['Blend','62% viscose, 38% cotton (Waikiki)',955,1925,null,null,null],
+['Blend','57% viscose, 22% linen, 21% acrylic (Damask)',1045,2105,null,null,null],
+['Blend','64% viscose, 36% elite',10000,20180,45,60,75],
+['Blend','Viscose/Angelina (55% Lenpur, 38% viscose, 7% Angelina)',2000,4036,12,16,18],
+['Blend','94% wool, 6% Angelina',1600,3230,8,10,12],
+['Blend','4-ply wool/Angelina',1200,2425,6,8,10],
+['Blend','2-ply wool/Angelina bouclé (94% wool, 6% Angelina)',750,1520,4,6,8],
+['Blend','89% wool, 6% Angelina, 5% sequins',1100,2220,null,null,null],
+['Wool','65% wool, 35% camel down',2100,4238,12,15,20],
+['Blend','Rayon/cotton/flax slub',1800,3630,12,15,18],
+['Blend','65% merino, 30% silk, 5% nylon',1750,3532,10,12,16],
+['Blend','95% cotton, 5% blend (Riveting)',1600,8475,8,12,15],
+['Blend','4-ply 75% yak down, 25% bamboo',1440,2906,6,9,12],
+['Blend','12/2 cot/lin (70% cotton, 30% linen)',5040,10170,20,24,30],
+['Blend','75% recycled cotton, 25% acrylic',825,1664,null,null,null],
+['Blend','8/4 rug warp (50% cotton, 50% polyester)',1600,3390,10,15,18],
+['Blend','Cotton/metallic cord',750,1455,4,6,8],
+['Blend','11/2 hemp/cotton',4620,9306,20,24,36],
+['Blend','60% alpaca, 40% cotton (Serena)',4200,8475,20,24,28],
+['Blend','30% linen, 70% organic cotton (Allegoro)',1400,2825,10,12,15],
+['Blend','35% hemp, 35% cotton, 30% rayon',1400,2820,12,15,20],
+['Blend','34% hemp, 41% cotton, 25% Modal (Hempathy)',1390,2700,10,14,16],
+['Blend','49% linen, 35% kid mohair, 16% nylon (KidLin)',2270,4550,10,12,18],
+['Blend','60% Tencel, 40% cotton',4200,8475,20,24,28],
+['Blend','22/2 cottlin (50% cotton, 50% linen)',3170,6390,15,20,24],
+['Metallic','#8 fine metallic braid',3000,null,null,null,null],
+['Blend','52% bamboo, 43% Superwash merino, 5% silk',3000,null,12,15,18],
+['Blend','2-ply 50% buffalo, 50% alpaca (Lonesome Stone Natural Fiber Mill)',900,1804,6,8,10],
+['Wool','95% wool, 5% acrylic (Circus, Artful Yarns)',null,null,null,null,null,'93 yd/100 g'],
+['Metallic','100% Lurex (Astra-Glow)',3000,6055,null,null,null],
+['Blend','64% viscose, 36% polyester',680,null,null,null,null,'200 yd/25 g ball'],
+['Blend','71% rayon, 20% cotton',950,1900,10,12,15],
+['Blend','Rayon/wool bouclé',2100,4238,12,15,18],
+['Blend','8/4 poly/cotton',1400,2825,10,14,16],
+['Blend','45% cotton, 40% wool, 15% nylon (Socketta)',1878,3710,10,15,18],
+['Blend','12/1 silk/mohair (80% mohair, 20% silk)',5920,11934,20,24,30],
+['Blend','18/2 wool/silk',5040,10170,22,26,30],
+['Blend','14/2 alpaca/silk (80% alpaca, 20% silk)',3472,7000,15,20,24],
+['Blend','44% polyamide, 29% cotton, 27% acrylic (Pompeii)',3000,6055,16,20,24],
+['Blend','80% cotton, 20% silk (Lace Yarn)',8100,16344,30,36,48,'425 yds/skein'],
+// RIBBONS, BOUCLES, NOVELTIES, METALLICS (page 8-9)
+['Blend','Silk/linen (80% silk, 20% linen)',2144,4322,12,15,18],
+['Blend','47% rayon, 25% linen, 17% silk (Seducer)',1150,2320,10,15,20],
+['Blend','14/2 wool/alpaca',3920,7460,16,20,24],
+['Blend','70% merino, 30% silk (Silk Blend)',1370,2780,null,null,null],
+['Blend','3-ply polyester rug yarn',680,1370,4,6,8],
+['Blend','2-ply wool blend (80% wool, 20% nylon)',1000,2018,8,10,12],
+['Blend','85% wool, 15% mohair',760,1533,6,8,10],
+['Blend','8/2 acrylic (Orlec)',3000,6055,16,20,24],
+['Blend','6/2/2 acrylic',1340,2699,10,12,15],
+['Plant','Siberian iris leaf',null,null,null,null,null],
+['Blend','Paper',400,805,6,8,10],
+['Metallic','600-denier gimp (metallic)',7500,15128,null,null,null],
+['Metallic','Viscose and metallized polyester (Lumina)',4000,8100,null,null,null],
+['Metallic','100% Lurex (Astra-Glow)',3000,6055,null,null,null],
+['Metallic','4-ply metallic (Frizzete)',2500,5050,12,15,18],
+['Metallic','Lurex/rayon metallic (Chainette)',1900,3385,12,15,18],
+['Silk','Silk elastic',13600,27445,null,null,null],
+['Blend','82% Nylon, 18% Lamé (24K)',null,null,8,10,12,'187 yd (203 m)/50 g ball'],
+['Blend','Cotton/rayon space-dyed yarn (Magic)',2500,5035,null,null,null],
+['Mohair','70% mohair, 30% nylon (Kid Mohair)',2500,5035,null,null,null],
+['Mohair','70% mohair, 25% viscose, 5% polyester (Artful Yarns Portrait Mohair)',1488,3000,4,6,8],
+['Mohair','Mohair (Barrington Mohair)',1000,2015,8,10,12],
+['Mohair','78% mohair, 13% wool, 9% nylon',992,null,null,null,null],
+['Blend','75% polyamide, 25% polyester (St. Tropez, Filatura Di Crosa)',1042,1928,null,null,null],
+['Mohair','78% mohair, 13% wool, 9% nylon (Heather, Halcyon Yarn)',989,1975,4,6,8],
+['Blend','75% rayon, 25% cotton bouclé (Pazaz)',950,1975,10,12,15],
+['Blend','Cotton/rayon knitting novelty (Ariel, Cherry Tree Hill)',950,1975,null,null,null],
+['Blend','97% acrylic, 3% polyester bouclé (Bernat)',800,1614,8,10,12],
+['Blend','Knitting novelty (Dazzle, Halcyon Yarn)',null,null,null,null,null,'82 yd (75 m)/25 g ball'],
+['Blend','50% cotton, 50% viscose ribbon (Mikado)',null,null,null,null,null,'112 yd/50 g'],
+['Blend','100% nylon ribbon (Eros, Plymouth Yarn)',null,null,null,null,null,'165 yd/50 g'],
+['Blend','100% cotton ribbon (Noro Wakaba)',null,null,null,null,null,'72 yd/40 g'],
+['Blend','70% acrylic, 30% nylon ribbon (Deco, Crystal Palace)',null,null,null,null,null,'80 yd/50 g'],
+['Blend','100% viscose ribbon (Glacé, Berocco)',null,null,null,null,null,'75 yd/50 g'],
+['Blend','Nylon knitting novelty (Windsoring, Cherry Tree Hill)',null,null,null,null,null,'165 yd (151 m)/ball'],
+['Blend','100% nylon knitting novelty (Eros, Plymouth)',1508,3044,null,null,null],
+['Blend','86% nylon, 10% rayon, 4% Lurex (Eros Glitz, Plymouth)',575,1160,null,null,null],
+['Blend','100% polyamid (Aquarius)',990,2000,8,10,12],
+['Blend','100% nylon (Fulauro)',732,1475,null,null,null],
+['Blend','Pendleton blanket selvedges',100,201,null,null,null],
+['Blend','Knitting novelty (Boa, Bernat)',null,null,null,null,null],
+['Blend','70% acrylic, 30% nylon ribbon (Deco Variegated Ribbon)',null,null,null,null,null,'80 yd (74 m)/50 g'],
+['Blend','50% cotton, 40% nylon, 10% acrylic (Luna Colors)',null,null,null,null,null,'75 yd (69 m)/50 g'],
+['Blend','Nylon ribbon (Dolce, Trendsetter)',null,null,null,null,null,'99 yd (91 m)/1.75 oz'],
+['Blend','50% cotton, 50% nylon ribbon (Tartelette, K1C2)',745,11,null,null,null,'11 m/50 g'],
+['Blend','Novelty ribbon (Frosty Rays)',1600,3225,10,12,15],
+['Blend','Rayon Ric Rac ribbon',1000,2018,10,12,16],
+['Blend','Nylon ribbon (Incredible, Lion Yarns)',1008,null,null,null,null,'110 yd/50 g'],
+['Blend','100% rayon ribbon (Colinette Giotto)',600,1210,null,null,null],
+['Blend','100% nylon (Segue)',540,1089,null,null,null],
+['Blend','Polyamide ribbon (Fettucchina)',1150,2190,8,10,12],
+['Blend','76% viscose, 24% polyester (Flora, Trendsetter)',1645,3320,null,null,null],
+['Blend','68% polyamide, 8% cotton, 10% nylon, 10% viscose (Cancun, Stacy Charles)',925,1850,null,null,null],
+['Blend','77% polyamide, 23% Tactel (Charm, Trendsetters)',2235,4500,null,null,null],
+['Blend','Knitting novelty (Charm, Trendsetter)',null,null,null,null,null,'86 yd (79 m)/ball'],
+['Blend','Viscose/cotton (Avanti)',950,1918,10,12,15],
+['Metallic','78% polyester, 22% metallic novelty (Lamé by Brazil)',753,1520,null,null,null],
+['Rayon','100% viscose (Skinny Majesty)',2300,4645,12,15,18],
+['Blend','Cotton/nylon ribbon (Cotton Gauze Ribbon)',1300,2625,null,null,null],
+['Blend','100% polyester (Lazer FX)',null,null,null,null,null,'70 yd (64 m)/10 g ball'],
+['Blend','100% polyester (Fizz)',null,null,null,null,null,'120 yd (110 m)/50 g ball'],
+['Blend','50% cotton, 25% rayon, 20% nylon, 5% metallic (Gypsy Magic Pizzazz)',null,null,null,null,null,'122 yd (112 m)/168 g ball'],
+['Blend','50% nylon, 50% polyester (Squiggle)',null,null,null,null,null,'100 yd (92 m)/50 g ball'],
+['Blend','Polyester eyelash yarn (Fizz)',1090,2196,8,10,12],
+['Mohair','Mohair bouclé (70% mohair, 24% wool, 6% nylon: Victorian Bouclé)',1173,2370,6,8,10],
+['Mohair','Mohair bouclé (78% mohair, 13% wool, 9% nylon: Stirling Mohair)',1000,2015,6,8,10],
+['Mohair','Mohair bouclé (95% mohair, 5% nylon)',550,1110,null,null,null],
+['Mohair','Mohair locks for needlefelting',null,null,null,null,null],
+['Silk','Silk eyelash (65% silk, 35% polyamide) binder',3100,6256,12,16,18],
+['Blend','Moda Vera knitting ribbon',null,null,null,null,null],
+// NONYARN PLANT MATERIALS (page 9)
+['Plant','African reed (sheer curtain weft)',null,null,null,null,null],
+['Plant','Bamboo skewer (weft only)',null,null,null,null,null],
+['Plant','Siberian iris leaf',null,null,null,null,null]
+];
+
+// Family mapping: which fiber IDs belong to which filter family
+const YL_FAMILY_MAP = {
+  Wool:    ['Wool','Alpaca','Mohair','Cashmere'],
+  Bamboo:  ['Bamboo','Soy'],
+  Hemp:    ['Hemp','Pineapple','Plant'],
+  Blend:   ['Blend']
+};
+
+// Pastel background colors per fiber — instant visual categorization
+const YL_FIBER_BG = {
+  'Cotton':   '#E8F0FE',
+  'Wool':     '#FCE8E8',
+  'Alpaca':   '#FCE8E8',
+  'Mohair':   '#FCE8E8',
+  'Cashmere': '#FCE8E8',
+  'Silk':     '#FFF8E1',
+  'Linen':    '#F5F0E8',
+  'Rayon':    '#F3E5F5',
+  'Tencel':   '#E0F2F1',
+  'Bamboo':   '#E8F5E9',
+  'Soy':      '#E8F5E9',
+  'Hemp':     '#F0EDE3',
+  'Pineapple':'#F0EDE3',
+  'Plant':    '#F0EDE3',
+  'Blend':    '#ECEFF1',
+  'Ribbon':   '#FCE4EC',
+  'Boucle':   '#FFF3E0',
+  'Novelty':  '#FFF3E0',
+  'Metallic': '#FAFAFA',
+  'Paper':    '#FFF3E0',
+  'Rattan':   '#F0EDE3',
+  'Straw':    '#F0EDE3',
+  'Wire':     '#FAFAFA'
+};
+
+function ylMatchesFamily(yarn, familyId) {
+  if (familyId === 'all') return true;
+  const fibers = YL_FAMILY_MAP[familyId] || [familyId];
+  return fibers.includes(yarn[0]);
+}
+
+let _ylView = 'all';
+let _ylFilter = 'all';
+let _ylQuery = '';
+let _ylFavorites = new Set();
+const _YL_FAV_KEY = 'weaversCanvas_yarnFavorites';
+
+function ylLoadFavorites() {
+  try {
+    const raw = localStorage.getItem(_YL_FAV_KEY);
+    if (raw) {
+      const arr = JSON.parse(raw);
+      if (Array.isArray(arr)) _ylFavorites = new Set(arr);
+    }
+  } catch(_) {}
+}
+
+function ylSaveFavorites() {
+  try {
+    localStorage.setItem(_YL_FAV_KEY, JSON.stringify(Array.from(_ylFavorites)));
+  } catch(_) {}
+}
+
+function ylToggleFavorite(idx, ev) {
+  if (ev) { ev.stopPropagation(); ev.preventDefault(); }
+  if (_ylFavorites.has(idx)) _ylFavorites.delete(idx);
+  else _ylFavorites.add(idx);
+  ylSaveFavorites();
+  ylRender();
+}
+
+
+function ylSetView(view) {
+  _ylView = view;
+  ylUpdateTabs();
+  ylRender();
+}
+
+function ylUpdateTabs() {
+  const tabAll = document.getElementById('yl_tab_all');
+  const tabFav = document.getElementById('yl_tab_fav');
+  if (tabAll) tabAll.classList.toggle('active', _ylView === 'all');
+  if (tabFav) tabFav.classList.toggle('active', _ylView === 'favorites');
+}
+
+
+function ylRender() {
+  const grid = document.getElementById('yl_grid');
+  const countEl = document.getElementById('yl_count');
+  if (!grid) return;
+  const q = (_ylQuery || '').trim().toLowerCase();
+  let visible = YL_YARNS.filter(y => {
+    if (_ylView === 'favorites') {
+      const idx = YL_YARNS.indexOf(y);
+      if (!_ylFavorites.has(idx)) return false;
+    } else {
+      if (!ylMatchesFamily(y, _ylFilter)) return false;
+    }
+    if (q) {
+      const hay = (y[0] + ' ' + y[1] + ' ' + (y[7] || '')).toLowerCase();
+      if (hay.indexOf(q) === -1) return false;
+    }
+    return true;
+  });
+  if (_ylView === 'favorites' && _ylFavorites.size === 0) {
+    countEl.textContent = 'No favorites yet — click ☆ on any card';
+  } else if (_ylView === 'favorites') {
+    countEl.textContent = visible.length + ' favorite' + (visible.length === 1 ? '' : 's') + (q ? ' match' : '');
+  } else {
+    countEl.textContent = visible.length + ' of ' + YL_YARNS.length + ' yarns';
+  }
+  if (visible.length === 0) {
+    let emptyMsg;
+    if (_ylView === 'favorites' && _ylFavorites.size === 0) {
+      emptyMsg = 'Click the ☆ on any card to add it to your favorites.';
+    } else if (_ylView === 'favorites' && q) {
+      emptyMsg = 'No favorites match your search.';
+    } else {
+      emptyMsg = 'No yarns match your filter.';
+    }
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-faint);font-style:italic;">' + emptyMsg + '</div>';
+    return;
+  }
+  let html = '';
+  visible.forEach((y, i) => {
+    const [fiber, name, yd, mk, mn, tp, mx, note] = y;
+    const swatch = YL_COLORS[fiber] || '#cccccc';
+    const cardBg = YL_FIBER_BG[fiber] || '#ffffff';
+    const yardTxt = yd ? yd.toLocaleString() + ' yd/lb' + (mk ? ' (' + mk.toLocaleString() + ' m/kg)' : '') : (note || 'Specialty yarn');
+    const hasSett = !!(mn && tp && mx);
+    const settTxt = hasSett ? (mn + ', ' + tp + ', ' + mx + ' EPI') : 'No sett listed';
+    const idxInAll = YL_YARNS.indexOf(y);
+    const isFav = _ylFavorites.has(idxInAll);
+    const settDis = hasSett ? '' : 'disabled style="opacity:0.35;cursor:not-allowed;background:var(--bg);color:var(--text-faint);border-color:var(--btn-hover);"';
+    const ycDis = hasSett ? '' : 'disabled style="opacity:0.35;cursor:not-allowed;background:var(--bg);color:var(--text-faint);border-color:var(--btn-hover);"';
+    const settTitle = hasSett ? 'Open the Sett Advisor with this yarn\'s recommended sett' : 'No sett listed for this yarn';
+    const ycTitle = hasSett ? 'Open Yarn Calc with this yarn\'s EPI' : 'No sett listed for this yarn';
+    const favTitle = isFav ? 'Remove from favorites' : 'Add to favorites';
+    html += '<div class="yl-card" data-idx="' + idxInAll + '" style="background:' + cardBg + ';">' +
+      '<div class="yl-body">' +
+        '<div class="yl-name-row">' +
+          '<div class="yl-name">' + name + '</div>' +
+          '<button class="yl-fav btn" onclick="ylToggleFavorite(' + idxInAll + ', event)" title="' + favTitle + '" aria-label="' + favTitle + '">' +
+            '<span class="yl-fav-star' + (isFav ? ' on' : '') + '">' + (isFav ? '\u2605' : '\u2606') + '</span>' +
+          '</button>' +
+        '</div>' +
+        '<div class="yl-fiber"><span class="yl-fiber-dot" style="background-color:' + swatch + ';"></span><span class="yl-badge">' + fiber + '</span></div>' +
+        '<div class="yl-yard">' + yardTxt + '</div>' +
+        '<div class="yl-sett"><span class="yl-sett-label">Sett:</span> ' + settTxt + '</div>' +
+        '<div class="yl-actions">' +
+          '<button class="yl-btn yl-btn-sett" onclick="ylApplySett(' + idxInAll + ')" ' + settDis + ' title="' + settTitle + '">\ud83d\udcd0 Use for Sett</button>' +
+          '<button class="yl-btn yl-btn-yc" onclick="ylApplyYarnCalc(' + idxInAll + ')" ' + ycDis + ' title="' + ycTitle + '">\ud83e\uddf6 Use for Yarn Calc</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  });
+  grid.innerHTML = html;
+}
+
+function ylApplySett(idx) {
+  const y = YL_YARNS[idx];
+  if (!y) return;
+  const tp = y[5];
+  if (tp) {
+    const wpiEl = document.getElementById('sa_wpi');
+    const strEl = document.getElementById('sa_structure');
+    if (wpiEl) { wpiEl.value = tp; }
+    if (strEl) { strEl.value = 'twill'; }
+    if (typeof settCalc === 'function') settCalc();
+  }
+  closeYarnLibrary();
+  if (typeof openSettAdvisor === 'function') openSettAdvisor();
+}
+
+function ylApplyYarnCalc(idx) {
+  const y = YL_YARNS[idx];
+  if (!y) return;
+  const tp = y[5];
+  if (tp) {
+    const epiEl = document.getElementById('yc_epi');
+    const ppiEl = document.getElementById('yc_ppi');
+    if (epiEl) epiEl.value = tp;
+    if (ppiEl) ppiEl.value = tp;
+    if (typeof ycCalc === 'function') ycCalc();
+  }
+  closeYarnLibrary();
+  if (typeof openYarnCalc === 'function') openYarnCalc();
+}
+
+// ═══ Standalone shims: tabs replace modals ═══
+function showTab(name) {
+    document.querySelectorAll('.wyt-tab').forEach(b =>
+        b.classList.toggle('active', b.dataset.tab === name));
+    document.querySelectorAll('.tab-page').forEach(s =>
+        s.classList.toggle('active', s.id === 'page-' + name));
+    if (name === 'calc' && typeof ycFetchRates === 'function') { try { ycFetchRates(); } catch (e) {} }
+    if (name === 'sett' && typeof settCalc === 'function') { try { settCalc(); } catch (e) {} }
+    if (name === 'library' && typeof ylRender === 'function') { try { ylRender(); } catch (e) {} }
+}
+function openYarnCalc() { showTab('calc'); }
+function openSettAdvisor() { showTab('sett'); }
+function openYarnLibrary() { showTab('library'); }
+function closeYarnCalc() { showTab('calc'); }
+function closeSettAdvisor() { showTab('sett'); }
+function closeYarnLibrary() { showTab('library'); }
+
+window.addEventListener('DOMContentLoaded', () => {
+    try { if (typeof ylLoadFavorites === 'function') ylLoadFavorites(); } catch (e) {}
+    try {
+        const sel = document.getElementById('yl_filter');
+        if (sel && !sel.options.length) {
+            YL_FAMILIES.forEach(f => {
+                const o = document.createElement('option');
+                o.value = f.id; o.textContent = f.label;
+                sel.appendChild(o);
+            });
+        }
+        if (sel) sel.value = _ylFilter;
+    } catch (e) {}
+    try { if (typeof ycRenderColorRows === 'function') ycRenderColorRows(); } catch (e) {}
+    try { if (typeof ycCalc === 'function') ycCalc(); } catch (e) {}
+    try { if (typeof settCalc === 'function') settCalc(); } catch (e) {}
+    try { if (typeof ylUpdateTabs === 'function') ylUpdateTabs(); } catch (e) {}
+    try { if (typeof ylRender === 'function') ylRender(); } catch (e) {}
+    showTab('calc');
+});
+</script>
+</body>
+</html>

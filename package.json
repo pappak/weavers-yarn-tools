@@ -1,0 +1,54 @@
+{
+  "name": "weavers-yarn-tools",
+  "version": "1.0.0",
+  "description": "Yarn Calculator, Sett Advisor and Yarn Library - standalone weaving tools from WeaversCanvas",
+  "main": "main.js",
+  "author": "Eldon <info@weaverscanvas.ca>",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win",
+    "dist:win-only": "electron-builder --win",
+    "dist:mac": "electron-builder --mac",
+    "dist:mas": "electron-builder --mac --target mas",
+    "dist:all": "electron-builder --win --mac"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "ca.weaverscanvas.yarntools",
+    "productName": "Weavers Yarn Tools",
+    "files": [
+      "main.js",
+      "app/**/*",
+      "build/icon.png"
+    ],
+    "icon": "build/icon.png",
+    "afterSign": "build/notarize.js",
+    "win": {
+      "target": ["nsis", "portable"]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "Weavers Yarn Tools"
+    },
+    "mac": {
+      "target": ["dmg"],
+      "category": "public.app-category.utilities",
+      "icon": "build/icon.png",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "type": "distribution",
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist"
+    },
+    "mas": {
+      "type": "distribution",
+      "entitlements": "build/entitlements.mas.plist"
+    }
+  }
+}

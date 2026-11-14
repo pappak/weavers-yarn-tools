@@ -2,7 +2,7 @@
 // the three tools (Yarn Calculator, Sett Advisor, Yarn Library) out of the
 // full WeaversCanvas source. All ported code is verbatim; standalone
 // adaptations live in the shell (tabs, shims, neutralizer CSS).
-import { readFileSync, writeFileSync, mkdirSync } from 'fs';
+import { readFileSync, writeFileSync, readdirSync, mkdirSync, existsSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -14,11 +14,16 @@ const src = readFileSync(SRC, 'utf8').split('\n');
 const slice = (a, b) => src.slice(a - 1, b).join('\n');
 
 // ── CSS slices ────────────────────────────────────────────────────────────
+// Some source slices include their own <style>/</style> wrappers — strip
+// them so they can't break out of the shell's style blocks.
+const stripStyle = (s) => s
+    .replace(/^[ \t]*<style[^>]*>[ \t]*\r?\n?/m, '')
+    .replace(/^[ \t]*<\/style>[ \t]*\r?\n?/m, '');
 const cssRoot = slice(32, 78);        // :root brand/surface/text variables
 const cssBtn = slice(161, 273);       // .btn family + legacy aliases
-const cssYc = slice(1496, 1514);      // .yc-* base rules
-const cssYl = slice(2223, 2259);      // .yl-* library rules
-const cssYcTheme = slice(10668, 10754);   // #yarnCalcModal theme overrides
+const cssYc = stripStyle(slice(1496, 1514));   // .yc-* base rules
+const cssYl = stripStyle(slice(2223, 2259));   // .yl-* library rules
+const cssYcTheme = stripStyle(slice(10668, 10754));   // #yarnCalcModal theme overrides
 const cssYcAddRemove = slice(10815, 10829); // yc-add-color / yc-remove-color
 const cssYlClose = slice(10844, 10857);     // library header close
 const cssYcClose = slice(10888, 10893);     // yarn calc header close re-override
@@ -43,6 +48,34 @@ const fix = (s) => s.replace(
     /document\.getElementById\('appVersion'\)\?\.textContent \|\| ''/g,
     `'${APP_VERSION}'`
 );
+
+// ── Yarn photos: copy crops into the app and emit an existence map ───────
+const PHOTOS_SRC = join(__dirname, 'chart-crops');
+const PHOTOS_OUT = join(__dirname, 'app', 'yarn-photos');
+mkdirSync(PHOTOS_OUT, { recursive: true });
+let photoIndices = [];
+if (existsSync(PHOTOS_SRC)) {
+    for (const f of readdirSync(PHOTOS_SRC).sort()) {
+        const m = f.match(/^yarn-(\d+)\.png$/);
+        if (!m) continue;
+        writeFileSync(join(PHOTOS_OUT, f), readFileSync(join(PHOTOS_SRC, f)));
+        photoIndices.push(parseInt(m[1], 10));
+    }
+}
+const photoSet = new Set(photoIndices);
+const patchYlBody = (s) => s.replace(
+    `'<div class="yl-body">' +`,
+    `'<div class="yl-body">' + yarnPhotoTag(idxInAll) +`
+) + `
+
+// Photo strips cropped from the Master Yarn Chart 2014 pages.
+const YL_PHOTO_SET = new Set(${JSON.stringify(photoIndices)});
+function yarnPhotoTag(i) {
+    if (!YL_PHOTO_SET.has(i)) return '';
+    return '<img class="yl-photo" loading="lazy" alt="" src="yarn-photos/yarn-' +
+        String(i).padStart(3, '0') + '.png" onerror="this.remove()">';
+}`;
+
 
 // ── Raleway fonts: bundle locally, fall back to Google Fonts link ────────
 let fontsCss = '';
@@ -101,6 +134,10 @@ body { margin:0; font-family:'Raleway',sans-serif; background:var(--bg); color:v
 .tab-page.active { display:block; animation:wyt-fade 0.15s ease-out; }
 @keyframes wyt-fade { from { opacity:0.4; } to { opacity:1; } }
 .wyt-footer { text-align:center; font-size:0.72em; color:var(--text-muted); padding:18px 0 26px; }
+
+/* Yarn photo strips (cropped from the chart) */
+.yl-photo { display:block; width:100%; height:38px; object-fit:cover; object-position:center;
+  border-radius:4px; margin:0 0 8px; background:#2e2e34; }
 
 /* ═══ Modal neutralizer: modals become page sections ═══ */
 .tab-page [id$="Modal"] {
@@ -197,7 +234,7 @@ ${fix(jsYcRest)}
 ${fix(jsSett)}
 ${fix(jsYlA)}
 ${fix(jsYlB)}
-${fix(jsYlC)}
+${fix(patchYlBody(jsYlC))}
 
 // ═══ Standalone shims: tabs replace modals ═══
 function showTab(name) {

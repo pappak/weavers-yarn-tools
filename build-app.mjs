@@ -118,12 +118,13 @@ const shellCss = `
 * { box-sizing: border-box; }
 body { margin:0; font-family:'Raleway',sans-serif; background:var(--bg); color:var(--text); }
 .wyt-header { background:linear-gradient(135deg,var(--brand-purple),var(--brand-blue)); color:white;
-  padding:14px 22px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  padding:14px 22px 16px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:10px; flex-wrap:wrap; }
 .wyt-brand { display:flex; align-items:center; gap:12px; }
 .wyt-brand img { height:40px; width:auto; border-radius:8px; }
 .wyt-brand .t1 { font-size:1.05em; font-weight:800; letter-spacing:0.03em; line-height:1.2; }
 .wyt-brand .t2 { font-size:0.68em; opacity:0.75; letter-spacing:0.06em; }
-.wyt-tabs { display:flex; gap:8px; flex-wrap:wrap; }
+.wyt-tabs { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
 .wyt-tab { padding:10px 20px; border-radius:9px; border:1px solid rgba(255,255,255,0.35);
   background:rgba(255,255,255,0.14); color:white; font-family:'Raleway',sans-serif;
   font-size:13px; font-weight:700; letter-spacing:0.04em; cursor:pointer; transition:background 0.12s; }
@@ -222,9 +223,9 @@ ${shellCss}
       </div>
     </div>
     <nav class="wyt-tabs">
-      <button class="wyt-tab active" data-tab="calc" onclick="showTab('calc')">🧶 Yarn Calculator</button>
-      <button class="wyt-tab" data-tab="sett" onclick="showTab('sett')">📐 Sett Advisor</button>
       <button class="wyt-tab" data-tab="library" onclick="showTab('library')">📚 Yarn Library</button>
+      <button class="wyt-tab" data-tab="sett" onclick="showTab('sett')">📐 Sett Advisor</button>
+      <button class="wyt-tab active" data-tab="calc" onclick="showTab('calc')">🧶 Yarn Calculator</button>
     </nav>
   </header>
 

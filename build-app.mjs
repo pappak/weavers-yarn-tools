@@ -72,8 +72,8 @@ const patchYlBody = (s) => s.replace(
 const YL_PHOTO_SET = new Set(${JSON.stringify(photoIndices)});
 function yarnPhotoTag(i) {
     if (!YL_PHOTO_SET.has(i)) return '';
-    return '<img class="yl-photo" loading="lazy" alt="" src="yarn-photos/yarn-' +
-        String(i).padStart(3, '0') + '.png" onerror="this.remove()">';
+    return '<img class="yl-photo" loading="lazy" alt="" title="Click to enlarge" src="yarn-photos/yarn-' +
+        String(i).padStart(3, '0') + '.png" onerror="this.remove()" onclick="ylZoomPhoto(' + i + ', event)" style="cursor:zoom-in;">';
 }`;
 
 
@@ -138,6 +138,18 @@ body { margin:0; font-family:'Raleway',sans-serif; background:var(--bg); color:v
 /* Yarn photo strips (cropped from the chart) */
 .yl-photo { display:block; width:100%; height:38px; object-fit:cover; object-position:center;
   border-radius:4px; margin:0 0 8px; background:#2e2e34; }
+
+/* Yarn photo zoom lightbox */
+#_ylZoom .wyt-zoom-card { background:white; border-radius:12px; padding:18px 22px 16px; max-width:700px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5); text-align:center; font-family:'Raleway',sans-serif; }
+#_ylZoom .wyt-zoom-img { width:640px; max-width:82vw; border-radius:8px; display:block; background:#2e2e34; }
+#_ylZoom .wyt-zoom-name { margin-top:12px; font-weight:800; font-size:1.05em; color:var(--brand-blue); }
+#_ylZoom .wyt-zoom-meta { font-size:0.8em; color:var(--text-muted); margin-top:3px; }
+#_ylZoom .wyt-zoom-close { background:var(--brand-purple); color:white; border:none; border-radius:9px;
+  padding:9px 22px; font-family:'Raleway',sans-serif; font-weight:700; font-size:12px;
+  letter-spacing:0.04em; cursor:pointer; margin-top:14px; }
+#_ylZoom .wyt-zoom-close:hover { background:var(--brand-purple-hover); }
+.yl-photo { cursor:zoom-in; }
 
 /* ═══ Modal neutralizer: modals become page sections ═══ */
 .tab-page [id$="Modal"] {
@@ -252,6 +264,42 @@ function openYarnLibrary() { showTab('library'); }
 function closeYarnCalc() { showTab('calc'); }
 function closeSettAdvisor() { showTab('sett'); }
 function closeYarnLibrary() { showTab('library'); }
+
+// ── Yarn photo lightbox: click a strip to see it enlarged ──
+function ylZoomPhoto(i, ev) {
+    if (ev) { ev.preventDefault(); ev.stopPropagation(); }
+    const y = (typeof YL_YARNS !== 'undefined') ? YL_YARNS[i] : null;
+    let host = document.getElementById('_ylZoom');
+    if (!host) {
+        host = document.createElement('div');
+        host.id = '_ylZoom';
+        host.setAttribute('role', 'dialog');
+        document.body.appendChild(host);
+    }
+    const name = (y && y[1]) ? escHtml(y[1]) : 'Yarn';
+    const meta = [
+        (y && y[0]) ? escHtml(y[0]) : '',
+        (y && y[2]) ? y[2].toLocaleString() + ' yd/lb' + (y[3] ? ' (' + y[3].toLocaleString() + ' m/kg)' : '') : '',
+        (y && y[4]) ? y[4] + ', ' + y[5] + ', ' + y[6] + ' EPI' : '',
+        (y && y[7]) ? escHtml(y[7]) : ''
+    ].filter(Boolean).join(' · ');
+    host.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:100000;display:flex;align-items:center;justify-content:center;padding:24px;';
+    host.innerHTML = '<div class="wyt-zoom-card">' +
+        '<img class="wyt-zoom-img" src="yarn-photos/yarn-' + String(i).padStart(3, '0') + '.png" alt="">' +
+        '<div class="wyt-zoom-name">' + name + '</div>' +
+        '<div class="wyt-zoom-meta">' + meta + '</div>' +
+        '<button class="wyt-zoom-close" type="button">Close</button>' +
+    '</div>';
+    const close = () => { host.style.display = 'none'; };
+    host.onclick = (e) => { if (e.target === host) close(); };
+    host.querySelector('.wyt-zoom-close').onclick = close;
+    if (!host.dataset.esc) {
+        host.dataset.esc = '1';
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && host.style.display !== 'none') host.style.display = 'none';
+        });
+    }
+}
 
 window.addEventListener('DOMContentLoaded', () => {
     try { if (typeof ylLoadFavorites === 'function') ylLoadFavorites(); } catch (e) {}

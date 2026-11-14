@@ -186,6 +186,11 @@ ${fontsCss}
 <style>
 :root {
 ${cssRoot}
+/* Present in WeaversCanvas but outside the sliced block — the library's
+   "Use for Yarn Calc" button and the calculator's cost figure need them. */
+--success: #2e7d32;
+--success-text: #1b5e20;
+--danger: #cc0033;
 }
 </style>
 <style>

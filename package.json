@@ -1,6 +1,6 @@
 {
   "name": "weavers-yarn-tools",
-  "version": "1.0.0",
+  "version": "1.2.1",
   "description": "Yarn Calculator, Sett Advisor and Yarn Library - standalone weaving tools from WeaversCanvas",
   "main": "main.js",
   "author": "Eldon <info@weaverscanvas.ca>",
@@ -22,6 +22,7 @@
     "productName": "Weavers Yarn Tools",
     "files": [
       "main.js",
+      "preload.js",
       "app/**/*",
       "build/icon.png"
     ],

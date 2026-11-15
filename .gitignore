@@ -3,3 +3,4 @@ dist/
 *.log
 chart-pages/
 chart-crops/
+.DS_Store

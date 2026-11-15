@@ -1,7 +1,28 @@
-const { app, BrowserWindow, Menu, shell } = require('electron');
+const { app, BrowserWindow, Menu, shell, ipcMain, screen } = require('electron');
 const path = require('path');
 
 let win = null;
+
+// ── Auto-fit window height to the visible page ──────────────────────────────
+// The renderer reports the page height; the window grows (within the screen)
+// so the tool and the credits footer are fully visible without scrolling.
+// Used by the Yarn Calculator and Sett Advisor; the Yarn Library scrolls.
+// The page shows the app version in its header/footer; package.json stays the
+// single source of truth (handle, so the renderer can await the reply).
+ipcMain.handle('wyt:app-version', () => app.getVersion());
+
+ipcMain.on('wyt:fit-window', (event, contentHeight) => {
+    const target = BrowserWindow.fromWebContents(event.sender);
+    if (!target || !Number.isFinite(contentHeight)) return;
+    const inner = target.getContentBounds();
+    const outer = target.getBounds();
+    const chrome = Math.max(0, outer.height - inner.height);
+    const display = screen.getDisplayMatching(outer);
+    const maxContent = Math.max(300, display.workArea.height - chrome);
+    const h = Math.round(Math.min(contentHeight, maxContent));
+    console.error(`[fit] page height ${Math.round(contentHeight)} -> window content ${inner.height} -> ${h} (screen max ${maxContent})`);
+    if (Math.abs(inner.height - h) > 1) target.setContentSize(inner.width, h, true);
+});
 
 function createWindow() {
     win = new BrowserWindow({
@@ -15,7 +36,8 @@ function createWindow() {
         webPreferences: {
             contextIsolation: true,
             nodeIntegration: false,
-            spellcheck: false
+            spellcheck: false,
+            preload: path.join(__dirname, 'preload.js')
         }
     });
 
@@ -58,6 +80,7 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+    console.error(`[ver] Weavers Yarn Tools ${app.getVersion()}`);
     createWindow();
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow();

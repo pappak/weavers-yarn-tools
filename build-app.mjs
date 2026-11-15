@@ -11,7 +11,57 @@ const SRC = 'C:/Users/eldon/Workspace/uploads/weaverscanvas.html';
 const OUT = join(__dirname, 'app', 'index.html');
 
 const src = readFileSync(SRC, 'utf8').split('\n');
-const slice = (a, b) => src.slice(a - 1, b).join('\n');
+
+// ── Anchor-based slicing ──────────────────────────────────────────────────
+// Slices are defined by content anchors, NOT line numbers, so edits to the
+// WeaversCanvas source (adding/removing lines) can never shift them.
+const findIdx = (anchor, from = 0) => {
+    for (let i = from; i < src.length; i++) {
+        if (src[i].includes(anchor)) return i;   // 0-based
+    }
+    throw new Error('anchor not found: ' + anchor);
+};
+const until = (startAnchor, endAnchor) => {
+    const a = findIdx(startAnchor);
+    const b = findIdx(endAnchor, a + 1);
+    return src.slice(a, b).join('\n');
+};
+// From an anchor line through the line where CSS brace balance returns to
+// zero `times` more times (collects one or more consecutive rules).
+const cssRules = (startAnchor, times = 1) => {
+    const a = findIdx(startAnchor);
+    const out = [];
+    let depth = 0, done = 0;
+    for (let i = a; i < src.length && done < times; i++) {
+        out.push(src[i]);
+        for (const ch of src[i]) {
+            if (ch === '{') depth++;
+            else if (ch === '}') { depth--; if (depth === 0) { done++; if (done === times) break; } }
+        }
+    }
+    return out.join('\n');
+};
+// From an anchor (or the <style> tag above it) through the block's </style>.
+const styleBlock = (anchor) => {
+    let a = findIdx(anchor);
+    while (a > 0 && !/^\s*<style/.test(src[a])) a--;
+    let b = a;
+    while (b < src.length && !/^\s*<\/style>/.test(src[b])) b++;
+    return src.slice(a, b + 1).join('\n');
+};
+// From a function anchor through the line before the next TOP-LEVEL
+// function whose name does NOT start with `prefix` (top-level = no indent
+// or the file's 4-space convention), stopping at any `</script>` boundary
+// so nested helper script blocks can never be swallowed.
+const untilForeignFunction = (startAnchor, prefix) => {
+    const a = findIdx(startAnchor);
+    for (let i = a + 1; i < src.length; i++) {
+        if (/^\s*<\/script>/.test(src[i])) return src.slice(a, i).join('\n');
+        const m = src[i].match(/^(?: {4})?function ([A-Za-z_$][\w$]*)/);
+        if (m && !m[1].startsWith(prefix)) return src.slice(a, i).join('\n');
+    }
+    return src.slice(a).join('\n');
+};
 
 // ── CSS slices ────────────────────────────────────────────────────────────
 // Some source slices include their own <style>/</style> wrappers — strip
@@ -19,28 +69,28 @@ const slice = (a, b) => src.slice(a - 1, b).join('\n');
 const stripStyle = (s) => s
     .replace(/^[ \t]*<style[^>]*>[ \t]*\r?\n?/m, '')
     .replace(/^[ \t]*<\/style>[ \t]*\r?\n?/m, '');
-const cssRoot = slice(32, 78);        // :root brand/surface/text variables
-const cssBtn = slice(161, 273);       // .btn family + legacy aliases
-const cssYc = stripStyle(slice(1496, 1514));   // .yc-* base rules
-const cssYl = stripStyle(slice(2223, 2259));   // .yl-* library rules
-const cssYcTheme = stripStyle(slice(10668, 10754));   // #yarnCalcModal theme overrides
-const cssYcAddRemove = slice(10815, 10829); // yc-add-color / yc-remove-color
-const cssYlClose = slice(10844, 10857);     // library header close
-const cssYcClose = slice(10888, 10893);     // yarn calc header close re-override
+const cssRoot = until('--brand-blue:', '--workspace-bg:');
+const cssBtn = cssRules('.btn {', 1) + '\n' + until('.btn-secondary {', '/* Danger');
+const cssYc = stripStyle(styleBlock('.yc-row {'));            // .yc-* base rules
+const cssYl = stripStyle(styleBlock('.yl-toolbar {'));        // .yl-* library rules
+const cssYcTheme = stripStyle(styleBlock('<style id="yc-pastel-theme">'));  // theme overrides
+const cssYcAddRemove = cssRules('#yarnCalcModal .yc-add-color {', 2);      // add + remove
+const cssYlClose = cssRules('#yarnLibraryModal button.btn-on-dark {', 2);  // rule + hover
+const cssYcClose = cssRules('#yarnCalcModal>div>div:first-child button.btn-on-dark {', 1);
 
 // ── HTML slices (kept verbatim, incl. modal wrappers) ─────────────────────
-const htmlYc = slice(1352, 1494);     // #yarnCalcModal
-const htmlSett = slice(10220, 10299); // #settAdvisorModal
-const htmlYl = slice(1292, 1336);     // #yarnLibraryModal
+const htmlYc = until('<div id="yarnCalcModal"', '<style');
+const htmlYl = until('YARN LIBRARY MODAL', '<style');
+const htmlSett = until('SETT ADVISOR MODAL', '<style');
 
 // ── JS slices (verbatim) ─────────────────────────────────────────────────
-const jsToast = slice(2891, 3085);    // toasts, escHtml, yc state + functions thru ycClear
-const jsYcWeight = slice(3132, 3138); // ycWeightPreset
-const jsYcRest = slice(3166, 3370);   // add/remove color, render rows, ycCalc, ycPrint
-const jsSett = slice(9308, 9400);     // SA data, open/close, settCalc, applyBalanced
-const jsYlA = slice(9462, 10041);     // YL data thru ylToggleFavorite
-const jsYlB = slice(10058, 10071);    // ylSetView, ylUpdateTabs
-const jsYlC = slice(10075, 10177);    // ylRender, ylApplySett, ylApplyYarnCalc
+const jsToast = until('// ── Toast notifications', 'function openYarnCalc');   // toasts, escHtml, yc state thru ycClear
+const jsYcWeight = until('function ycWeightPreset', 'function ycSyncFromLoom');
+const jsYcRest = untilForeignFunction('function ycAddColor', 'yc');            // add/remove, render, ycCalc, ycPrint
+const jsSett = until('const SA_PRESETS', "document.addEventListener('DOMContentLoaded'");
+const jsYlA = until('const YL_COLORS', 'function openYarnLibrary');            // YL data thru ylToggleFavorite
+const jsYlB = until('function ylSetView', 'function closeYarnLibrary');        // ylSetView, ylUpdateTabs
+const jsYlC = untilForeignFunction('function ylRender', 'yl');                 // ylRender, ylApplySett, ylApplyYarnCalc
 
 // appVersion fallback inside ycPrint → local constant
 const APP_VERSION = 'v1.0.0';
